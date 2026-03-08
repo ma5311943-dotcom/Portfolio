@@ -1,0 +1,390 @@
+/* Desktop styles */
+.navbar {
+    background-color: #000000;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(277deg, #da7c25 0.35%, #b923e1);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+}
+
+.nav-menu-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-menu li span {
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    color: white;
+}
+
+.nav-menu li span:hover,
+.nav-menu li span.active {
+    color: #b923e1;
+}
+
+/* Social Dropdown Styling */
+.nav-social-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown-trigger {
+    background: linear-gradient(90deg, #da7c25, #b923e1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700 !important;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background-color: #1a1a1a;
+    min-width: 160px;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border: 1px solid #333;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2002;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-social-dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #333;
+    color: #b923e1;
+}
+
+/* Connect Button */
+.nav-connect {
+    flex-shrink: 0;
+}
+
+.nav-connect a {
+    display: inline-block;
+    background: linear-gradient(277deg, #da7c25 0.35%, #b923e1);
+    padding: 0.55rem 1.3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white !important;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.nav-connect a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(185, 35, 225, 0.45);
+}
+
+.mobile-connect {
+    display: none !important;
+}
+
+.nav-mob-open,
+.nav-mob-close {
+    display: none;
+    cursor: pointer;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+    .nav-menu {
+        gap: 1.5rem;
+    }
+}
+
+/* ─── MOBILE HAMBURGER MENU ─────────────────────────────── */
+@media (max-width: 1024px) {
+
+    .nav-mob-open,
+    .nav-mob-close {
+        display: block;
+        width: 28px;
+        height: 28px;
+        z-index: 3000;
+        cursor: pointer;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .nav-logo {
+        z-index: 3000;
+        position: relative;
+    }
+
+    /* Slide-in panel — hidden off-screen by default */
+    .nav-menu-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(85vw, 360px);
+        height: 100dvh;
+        background: linear-gradient(160deg, #0f0f0f 0%, #050505 100%);
+        border-left: 1px solid rgba(185, 35, 225, 0.2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5rem 1.8rem 2.5rem;
+        z-index: 2600;
+        box-shadow: -8px 0 40px rgba(0, 0, 0, 0.9);
+        overflow-y: auto;
+        transform: translateX(100%);
+        visibility: hidden;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.4s;
+    }
+
+    .nav-menu-wrapper.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    /* Purple gradient strip at top of panel */
+    .nav-menu-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #da7c25, #b923e1);
+    }
+
+    /* Single-column menu list */
+    /* 2-column grid for mobile items */
+    .nav-menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu li a {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+    }
+
+    /* Nav item style */
+    .nav-menu li span {
+        display: block;
+        width: 100%;
+        padding: 0.85rem 1.2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        text-align: left;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .nav-menu li span:hover,
+    .nav-menu li span.active {
+        color: #fff;
+        background: rgba(185, 35, 225, 0.15);
+        border-color: rgba(185, 35, 225, 0.4);
+        padding-left: 1.6rem;
+    }
+
+    .nav-menu li span.active {
+        background: rgba(185, 35, 225, 0.2);
+        border-color: #b923e1;
+    }
+
+    /* Socials section */
+    /* Mobile Social section - Span 2 columns */
+    .nav-social-dropdown {
+        grid-column: span 2;
+        width: 100%;
+        margin-top: 1.2rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dropdown-trigger {
+        display: block;
+        background: none !important;
+        border: none !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0 0 0.6rem 0.2rem;
+        background: linear-gradient(90deg, #da7c25, #b923e1);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Social icons row */
+    .dropdown-content {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        min-width: unset;
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        width: 100%;
+    }
+
+    .dropdown-content a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        flex: 1;
+        justify-content: center;
+        transition: all 0.25s ease;
+    }
+
+    .dropdown-content a span {
+        display: inline !important;
+    }
+
+    .dropdown-content a:hover {
+        background: rgba(185, 35, 225, 0.18);
+        border-color: rgba(185, 35, 225, 0.5);
+        color: #fff;
+    }
+
+    /* Connect button inside mobile panel */
+    .mobile-connect {
+        display: block !important;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 0.85rem 1.2rem;
+        background: linear-gradient(277deg, #da7c25 0.35%, #b923e1);
+        border-radius: 12px;
+        color: #fff !important;
+        font-size: 1rem;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .mobile-connect:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+
+    .nav-connect {
+        display: none;
+    }
+}
+
+body.no-scroll {
+    overflow: hidden !important;
+    height: 100vh;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0.7rem 1rem;
+    }
+
+    .nav-logo {
+        font-size: 1.5rem;
+    }
+
+    .nav-menu-wrapper {
+        width: min(85vw, 300px);
+    }
+}
+
+@media (max-width: 380px) {
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+
+    .nav-menu-wrapper {
+        width: 90vw;
+    }
+}
