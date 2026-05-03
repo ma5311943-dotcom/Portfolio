@@ -1,7 +1,9 @@
-/* Desktop styles */
+/* ═══════════════════════════════════════════
+   NAVBAR — BASE (Desktop first)
+═══════════════════════════════════════════ */
 .navbar {
-    background-color: #000000;
-    color: white;
+    background-color: #000;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -12,9 +14,9 @@
     right: 0;
     z-index: 2000;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    transition: all 0.3s ease;
 }
 
+/* ── Logo ── */
 .nav-logo {
     font-size: 1.8rem;
     font-weight: 800;
@@ -24,13 +26,72 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
-    flex-shrink: 0;
+    flex: 1;
+    z-index: 3100;
+    position: relative;
 }
 
+/* ══════════════════════════════════════════
+   HAMBURGER BUTTON
+   — visible only on mobile (≤900px)
+══════════════════════════════════════════ */
+.hamburger {
+    display: none;
+    /* hidden on desktop */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 3100;
+    position: relative;
+}
+
+.hamburger span {
+    display: block;
+    height: 2.5px;
+    width: 100%;
+    background: linear-gradient(90deg, #da7c25, #b923e1);
+    border-radius: 10px;
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.25s ease,
+        width 0.3s ease;
+}
+
+/* Open state — animate to X */
+.hamburger.is-open span:nth-child(1) {
+    transform: translateY(8.75px) rotate(45deg);
+}
+
+.hamburger.is-open span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+}
+
+.hamburger.is-open span:nth-child(3) {
+    transform: translateY(-8.75px) rotate(-45deg);
+}
+
+/* ══════════════════════════════════════════
+   BACKDROP
+══════════════════════════════════════════ */
+.nav-backdrop {
+    display: none;
+    /* shown via JS — see mobile section */
+}
+
+/* ══════════════════════════════════════════
+   NAV MENU WRAPPER  (desktop)
+══════════════════════════════════════════ */
 .nav-menu-wrapper {
-    flex-grow: 1;
+    flex: 2;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .nav-menu {
@@ -42,13 +103,17 @@
     align-items: center;
 }
 
+.nav-menu li a {
+    text-decoration: none;
+}
+
 .nav-menu li span {
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: color 0.25s ease;
     white-space: nowrap;
-    color: white;
+    color: #fff;
 }
 
 .nav-menu li span:hover,
@@ -56,7 +121,7 @@
     color: #b923e1;
 }
 
-/* Social Dropdown Styling */
+/* ── Socials dropdown ── */
 .nav-social-dropdown {
     position: relative;
     cursor: pointer;
@@ -68,6 +133,10 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700 !important;
+}
+
+.mobile-socials-row {
+    display: none;
 }
 
 .dropdown-content {
@@ -83,8 +152,10 @@
     border: 1px solid #333;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 2002;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.3s;
+    z-index: 2200;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -97,7 +168,7 @@
 }
 
 .dropdown-content a {
-    color: white;
+    color: #fff;
     text-decoration: none;
     padding: 8px 14px;
     border-radius: 8px;
@@ -110,71 +181,91 @@
 }
 
 .dropdown-content a:hover {
-    background-color: #333;
+    background: #333;
     color: #b923e1;
 }
 
-/* Connect Button */
+/* ── Connect button (desktop) ── */
 .nav-connect {
-    flex-shrink: 0;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.nav-connect a {
+.nav-connect a,
+.nav-connect span {
     display: inline-block;
     background: linear-gradient(277deg, #da7c25 0.35%, #b923e1);
     padding: 0.55rem 1.3rem;
     border-radius: 50px;
     cursor: pointer;
-    color: white !important;
+    color: #fff !important;
     font-size: 0.88rem;
     font-weight: 700;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
     text-decoration: none;
 }
 
-.nav-connect a:hover {
+.nav-connect a:hover,
+.nav-connect span:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(185, 35, 225, 0.45);
 }
 
+/* Hidden on desktop */
 .mobile-connect {
     display: none !important;
 }
 
-.nav-mob-open,
-.nav-mob-close {
-    display: none;
-    cursor: pointer;
-}
-
-/* Tablet */
+/* ══════════════════════════════════════════
+   TABLET  (1024 → 901)
+══════════════════════════════════════════ */
 @media (max-width: 1200px) {
     .nav-menu {
         gap: 1.5rem;
     }
 }
 
-/* ─── MOBILE HAMBURGER MENU ─────────────────────────────── */
-@media (max-width: 1024px) {
+/* ══════════════════════════════════════════
+   MOBILE  (≤ 900px)
+   — hamburger + slide panel
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
 
-    .nav-mob-open,
-    .nav-mob-close {
+    /* Show hamburger */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Show backdrop when open */
+    .nav-backdrop {
         display: block;
-        width: 28px;
-        height: 28px;
-        z-index: 3000;
-        cursor: pointer;
-        flex-shrink: 0;
-        position: relative;
+        position: fixed;
+        inset: 0;
+        z-index: 2500;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s ease;
     }
 
-    .nav-logo {
-        z-index: 3000;
-        position: relative;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
 
-    /* Slide-in panel — hidden off-screen by default */
+    /* Hide desktop connect */
+    .nav-connect {
+        display: none;
+    }
+
+    /* ── Slide panel ── */
     .nav-menu-wrapper {
         position: fixed;
         top: 0;
@@ -191,37 +282,52 @@
         z-index: 2600;
         box-shadow: -8px 0 40px rgba(0, 0, 0, 0.9);
         overflow-y: auto;
+        -ms-overflow-style: none;
+        /* Hide scrollbar for IE and Edge */
+        scrollbar-width: none;
+        /* Hide scrollbar for Firefox */
+        -webkit-overflow-scrolling: touch;
+        pointer-events: none;
+        /* Slide off-screen by default */
         transform: translateX(100%);
         visibility: hidden;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-            visibility 0.4s;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.5s;
     }
 
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .nav-menu-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Slide in */
     .nav-menu-wrapper.open {
         transform: translateX(0);
         visibility: visible;
+        overflow-y: auto;
+        pointer-events: auto;
     }
 
-    /* Purple gradient strip at top of panel */
+    /* Purple strip at top of panel */
     .nav-menu-wrapper::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
+        height: 4px;
         background: linear-gradient(90deg, #da7c25, #b923e1);
+        z-index: 2;
     }
 
-    /* Single-column menu list */
-    /* 2-column grid for mobile items */
+    /* 2-column grid */
     .nav-menu {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.8rem;
         width: 100%;
-        padding: 0;
         margin: 0;
+        padding: 0;
     }
 
     .nav-menu li {
@@ -234,7 +340,6 @@
         text-decoration: none;
     }
 
-    /* Nav item style */
     .nav-menu li span {
         display: block;
         width: 100%;
@@ -251,8 +356,7 @@
         cursor: pointer;
     }
 
-    .nav-menu li span:hover,
-    .nav-menu li span.active {
+    .nav-menu li span:hover {
         color: #fff;
         background: rgba(185, 35, 225, 0.15);
         border-color: rgba(185, 35, 225, 0.4);
@@ -260,80 +364,42 @@
     }
 
     .nav-menu li span.active {
+        color: #fff;
         background: rgba(185, 35, 225, 0.2);
         border-color: #b923e1;
     }
 
-    /* Socials section */
-    /* Mobile Social section - Span 2 columns */
-    .nav-social-dropdown {
-        grid-column: span 2;
-        width: 100%;
-        margin-top: 1.2rem;
-        padding-top: 1.2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .dropdown-trigger {
-        display: block;
-        background: none !important;
-        border: none !important;
-        font-size: 0.8rem !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        padding: 0 0 0.6rem 0.2rem;
-        background: linear-gradient(90deg, #da7c25, #b923e1);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    /* Social icons row */
-    .dropdown-content {
-        position: static !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        background: transparent;
-        box-shadow: none;
-        border: none;
-        padding: 0;
-        min-width: unset;
+    /* Simple social links row on mobile */
+    .mobile-socials-row {
         display: flex;
-        flex-direction: row;
-        gap: 0.75rem;
+        justify-content: center;
+        gap: 2rem;
         width: 100%;
+        margin-top: 1rem;
+        grid-column: span 2;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .dropdown-content a {
+    .simple-social-link {
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.65rem 1rem;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.88rem;
-        font-weight: 600;
-        text-decoration: none;
-        flex: 1;
         justify-content: center;
-        transition: all 0.25s ease;
     }
 
-    .dropdown-content a span {
-        display: inline !important;
+    .simple-social-link:hover {
+        color: #b923e1;
+        transform: scale(1.1);
     }
 
-    .dropdown-content a:hover {
-        background: rgba(185, 35, 225, 0.18);
-        border-color: rgba(185, 35, 225, 0.5);
-        color: #fff;
+    /* Hide desktop dropdown elements on mobile */
+    .nav-social-dropdown {
+        display: none !important;
     }
 
-    /* Connect button inside mobile panel */
+    /* ── Connect button inside panel ── */
     .mobile-connect {
         display: block !important;
         width: 100%;
@@ -347,24 +413,18 @@
         text-align: center;
         text-decoration: none;
         cursor: pointer;
-        transition: all 0.25s ease;
+        transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
     .mobile-connect:hover {
         opacity: 0.9;
         transform: scale(1.02);
     }
-
-    .nav-connect {
-        display: none;
-    }
 }
 
-body.no-scroll {
-    overflow: hidden !important;
-    height: 100vh;
-}
-
+/* ══════════════════════════════════════════
+   SMALL PHONES (≤ 600px)
+══════════════════════════════════════════ */
 @media (max-width: 600px) {
     .navbar {
         padding: 0.7rem 1rem;
@@ -387,4 +447,17 @@ body.no-scroll {
     .nav-menu-wrapper {
         width: 90vw;
     }
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL
+══════════════════════════════════════════ */
+html.no-scroll {
+    overflow: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    padding-right: 8px;
+    /* Offset to prevent jump when scrollbar disappears */
 }

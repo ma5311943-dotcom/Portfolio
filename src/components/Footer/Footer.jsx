@@ -41,6 +41,7 @@ const Footer = () => {
                         <li onClick={() => scrollToSection("home")}>Home</li>
                         <li onClick={() => scrollToSection("about")}>About</li>
                         <li onClick={() => scrollToSection("services")}>Services</li>
+                        <li onClick={() => scrollToSection("portfolio")}>Projects</li>
                         <li onClick={() => scrollToSection("contact")}>Contact</li>
                     </ul>
                 </div>

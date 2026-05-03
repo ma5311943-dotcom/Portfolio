@@ -8,13 +8,8 @@ import MyWork from './components/MyWork/MyWork'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import AOS from 'aos'
-import { fullstack_projects } from './assets/mywork_data'
-
-import NexusMarketplace from "./components/ProjectDetails/NexusMarketplace";
-import NovelNest from "./components/ProjectDetails/NovelNest";
-import WebTestingToolView from "./components/ProjectDetails/WebTestingToolView";
-import SocialSphere from "./components/ProjectDetails/SocialSphere";
-import TechTitanStore from "./components/ProjectDetails/TechTitanStore";
+import projectsData from './assets/data.json'
+import ProjectDetail from "./components/ProjectDetails/ProjectDetail";
 
 const Home = () => (
   <>
@@ -34,23 +29,13 @@ const ProjectView = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const project = fullstack_projects.find(p => p.w_name.toLowerCase().replace(/\s+/g, '-') === id);
+  const project = projectsData.find(p => p.id === id);
 
   if (!project) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}><h2>Project not found</h2></div>;
 
-  const props = {
-    project,
-    onBack: () => navigate('/')
-  };
+  const props = { project, onBack: () => navigate('/') };
 
-  switch (project.w_name) {
-    case "Nexus Marketplace": return <NexusMarketplace {...props} />;
-    case "Novel Nest": return <NovelNest {...props} />;
-    case "Web Testing Tool": return <WebTestingToolView {...props} />;
-    case "SocialSphere": return <SocialSphere {...props} />;
-    case "TechTitan Store": return <TechTitanStore {...props} />;
-    default: return null;
-  }
+  return <ProjectDetail {...props} />;
 };
 
 const App = () => {
