@@ -30,11 +30,6 @@
     z-index: 3100;
     position: relative;
 }
-
-/* ══════════════════════════════════════════
-   HAMBURGER BUTTON
-   — visible only on mobile (≤900px)
-══════════════════════════════════════════ */
 .hamburger {
     display: none;
     /* hidden on desktop */
@@ -458,6 +453,4 @@ html.no-scroll {
 
 body.no-scroll {
     overflow: hidden;
-    padding-right: 8px;
-    /* Offset to prevent jump when scrollbar disappears */
 }
