@@ -21,7 +21,9 @@ const MyWork = () => {
       </div>
 
       <div className="section-container">
-        <h2 className="section-subtitle" data-aos="fade-right">Fullstack Next.js Projects</h2>
+        <h2 className="section-subtitle" data-aos="fade-right">
+          Fullstack Next.js Projects
+        </h2>
         <div className="mywork-container">
           {projectsData.map((work, i) => (
             <div
