@@ -1,0 +1,35 @@
+{
+  "name": "prsonal",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
+    "@next/swc-win32-x64-msvc": "^16.3.0",
+    "aos": "^2.3.4",
+    "lucide-react": "^0.562.0",
+    "next": "^16.3.0",
+    "react": "^19.1.0",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "react-scroll": "^1.9.3",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "eslint": "^9.29.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0"
+  }
+}
