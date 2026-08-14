@@ -34,7 +34,7 @@ const Hero = () => {
         </div>
         <div className="hero-resume" data-aos="fade-up" data-aos-delay="700">
           <a
-            href="/cv.pdf"
+            href="/cv.docx"
             download
             className="resume-link"
           >
