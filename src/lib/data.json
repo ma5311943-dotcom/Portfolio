@@ -1,5 +1,27 @@
 [
   {
+    "id": "ilyas-ka-gpt",
+    "name": "IlyasKaGpt",
+    "title": "100% Offline On-Device Multimodal AI Assistant",
+    "img": "/projects/IlyasKaGptImg.png",
+    "desc": "A 100% offline, serverless, and private on-device AI assistant. It runs quantized Large Language Models (LLMs) and Vision-Language Models (VLMs) directly on mobile hardware with zero internet, zero server costs, and complete privacy.",
+    "how_built": "Built with React Native and llama.rn (llama.cpp) to run 4-bit GGUF models (Qwen2.5 & Qwen2-VL) natively on mobile CPU/GPU/NPU. Features real-time token streaming, offline image and camera inspection, local PDF parsing, voice chat (STT/TTS), and an in-app background model downloader from HuggingFace.",
+    "tech": [
+      "React Native",
+      "llama.rn (llama.cpp)",
+      "TypeScript",
+      "GGUF Quantization",
+      "Qwen2.5 LLM",
+      "Qwen2-VL Vision",
+      "On-Device AI",
+      "Offline Vision & OCR",
+      "react-native-fs",
+      "Speech-to-Text / TTS",
+      "Zero-Cloud Architecture"
+    ],
+    "video": "/projects/IlyasKaGpt.mov"
+  },
+  {
     "id": "pharma-ease",
     "name": "Pharma-Ease",
     "title": "Full-Stack AI-Powered Pharmacy Platform",

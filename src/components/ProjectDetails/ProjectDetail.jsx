@@ -48,13 +48,18 @@ const ProjectDetail = ({ onBack, project }) => {
                 <div className="detail-video-container">
                     {project.video && (
                         <video
-                            src={project.video}
+                            key={project.video}
                             controls
                             autoPlay
                             muted
                             loop
+                            playsInline
                             className="detail-video"
-                        />
+                        >
+                            <source src={project.video} type="video/quicktime" />
+                            <source src={project.video} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                     )}
                 </div>
             </div>
