@@ -1,14 +1,17 @@
 "use client";
 import "./Hero.css";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LetterReveal from "../LetterReveal/LetterReveal";
+import ScrambleText from "./ScrambleText";
 import Reveal from "../Reveal/Reveal";
 import Magnetic from "../Magnetic/Magnetic";
 import HeroPortrait3D from "./HeroPortrait3D";
 import HeroIntro from "./HeroIntro";
+import HeroParticles from "./HeroParticles";
+import { useAppLoader } from "../SupernovaLoader/AppLoaderWrapper";
 
 const MotionDiv = motion.div;
 const roles = [
@@ -20,6 +23,9 @@ const roles = [
 ];
 
 const Hero = () => {
+  const { isLoaded } = useAppLoader();
+  const heroRef = useRef(null);
+  const isInView = useInView(heroRef, { amount: 0.25, once: false });
   const [isIntroOpen, setIsIntroOpen] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
   const [roleText, setRoleText] = useState(roles[0]);
@@ -69,8 +75,9 @@ const Hero = () => {
   };
 
   return (
-    <div id="home" className="hero">
+    <div id="home" ref={heroRef} className="hero">
       <div className="hero-glow" aria-hidden="true" />
+      <HeroParticles />
       <AnimatePresence mode="wait" initial={false}>
         {isIntroOpen ? (
           <MotionDiv
@@ -113,11 +120,16 @@ const Hero = () => {
             <MotionDiv
               className="hero-image-reveal"
               initial={shouldReduceMotion ? false : { opacity: 0, x: "-100vw" }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={
+                shouldReduceMotion
+                  ? { opacity: 1, x: 0 }
+                  : isLoaded && isInView
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: "-100vw" }
+              }
               transition={{
-                duration: shouldReduceMotion ? 0 : 1.45,
-                delay: shouldReduceMotion ? 0 : 0.4,
-                ease: [0.22, 1, 0.36, 1],
+                duration: shouldReduceMotion ? 0 : 1.35,
+                ease: [0.16, 1, 0.3, 1],
               }}
             >
               <HeroPortrait3D src="/profile.png" alt="Muhammad Ilyas" />
@@ -125,7 +137,7 @@ const Hero = () => {
             <div className="hero-copy">
               <Reveal as="h1" delay={0.15}>
                 <LetterReveal as="span" text="I am " />
-                <LetterReveal as="span" text="Muhammad Ilyas" className="highlight-name" />
+                <ScrambleText text="Muhammad Ilyas" className="highlight-name scramble-name" triggerOnMount={true} />
               </Reveal>
 
               <h2 className="hero-role" aria-label={`I'm a ${roles[roleIndex]}`}>

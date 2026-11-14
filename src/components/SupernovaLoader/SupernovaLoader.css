@@ -1,0 +1,152 @@
+.agency-loader-root {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 5 Vertical Staggered Black/Dark Columns */
+.agency-shutters {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.agency-shutter-bar {
+  flex: 1;
+  height: 100%;
+  background: #09080c;
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.agency-shutter-bar:last-child {
+  border-right: none;
+}
+
+/* Center Content */
+.agency-loader-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2rem, 5vw, 4rem);
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+/* Top Branding */
+.agency-loader-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.agency-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #da7c25;
+  box-shadow: 0 0 12px #da7c25;
+  animation: agency-pulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes agency-pulse {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 1; }
+}
+
+.agency-brand {
+  font-family: monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  color: #a79cb3;
+  font-weight: 600;
+}
+
+/* Middle Showcase */
+.agency-greeting-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+}
+
+.agency-text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: 900px;
+}
+
+.agency-greeting {
+  font-size: clamp(2.2rem, 6.2vw, 5.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #ffffff 40%, #da7c25 75%, #b923e1 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  text-align: center;
+  filter: drop-shadow(0 0 40px rgba(185, 35, 225, 0.28));
+}
+
+.agency-subtag {
+  font-family: monospace;
+  font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+  color: #dfb5f5;
+  letter-spacing: 0.12em;
+  margin: 0;
+  opacity: 0.9;
+  text-shadow: 0 0 15px rgba(185, 35, 225, 0.4);
+}
+
+/* Bottom Progress Track & Numbers */
+.agency-loader-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.agency-progress-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.agency-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #da7c25, #b923e1);
+  border-radius: 999px;
+  box-shadow: 0 0 15px rgba(218, 124, 37, 0.8);
+  transition: width 0.08s linear;
+}
+
+.agency-progress-counter {
+  font-family: monospace;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.agency-percent-symbol {
+  font-size: 0.9rem;
+  color: #da7c25;
+}

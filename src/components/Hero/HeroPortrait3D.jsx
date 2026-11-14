@@ -2,7 +2,24 @@
 
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiNodedotjs, 
+  SiMongodb, 
+  SiDocker, 
+  SiJavascript 
+} from "react-icons/si";
 import "./HeroPortrait3D.css";
+
+const ORBIT_BADGES = [
+  { icon: SiReact, label: "React", color: "#61dafb", angle: 0, delay: 0 },
+  { icon: SiNextdotjs, label: "Next.js", color: "#ffffff", angle: 60, delay: 0.5 },
+  { icon: SiNodedotjs, label: "Node.js", color: "#68a063", angle: 120, delay: 1 },
+  { icon: SiMongodb, label: "MongoDB", color: "#47a248", angle: 180, delay: 1.5 },
+  { icon: SiDocker, label: "Docker", color: "#2496ed", angle: 240, delay: 2 },
+  { icon: SiJavascript, label: "JS", color: "#f7df1e", angle: 300, delay: 2.5 },
+];
 
 const HeroPortrait3D = ({ src, alt }) => {
   const cardRef = useRef(null);
@@ -37,6 +54,32 @@ const HeroPortrait3D = ({ src, alt }) => {
     <div className="hero-3d-wrapper">
       {/* Background ambient multi-color glow */}
       <div className="hero-3d-glow" aria-hidden="true" />
+
+      {/* Orbiting Floating Tech Badges */}
+      <div className="hero-orbit-container" aria-hidden="true">
+        {ORBIT_BADGES.map((badge, idx) => {
+          const Icon = badge.icon;
+          return (
+            <motion.div
+              key={badge.label}
+              className={`hero-orbit-badge badge-${idx}`}
+              animate={{
+                y: [0, -9, 0],
+                rotate: [0, 4, -4, 0],
+              }}
+              transition={{
+                duration: 3 + (idx % 3) * 0.7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: badge.delay,
+              }}
+              title={badge.label}
+            >
+              <Icon style={{ color: badge.color }} />
+            </motion.div>
+          );
+        })}
+      </div>
 
       {/* Floating 3D card */}
       <motion.div
@@ -81,4 +124,3 @@ const HeroPortrait3D = ({ src, alt }) => {
 };
 
 export default HeroPortrait3D;
-

@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import AppLoaderWrapper from "../components/SupernovaLoader/AppLoaderWrapper";
 
 export const metadata = {
   title: "Muhammad Ilyas | MERN Stack Developer",
@@ -12,11 +13,13 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
-        <div className="app-container">
-          <Navbar />
-          {children}
-          <Footer />
-        </div>
+        <AppLoaderWrapper>
+          <div className="app-container">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </AppLoaderWrapper>
       </body>
     </html>
   );

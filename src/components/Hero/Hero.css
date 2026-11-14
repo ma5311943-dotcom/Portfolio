@@ -393,3 +393,13 @@
         animation: none;
     }
 }
+
+.scramble-name {
+  display: inline-block;
+  background: linear-gradient(90deg, #da7c25, #b923e1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: inherit;
+  font-size: inherit;
+}
