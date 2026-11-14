@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "aos/dist/aos.css";
 
 * {
   margin: 0;
@@ -10,6 +9,17 @@
 @font-face {
   font-family: nb;
   src: url(/fonts/NBInternationalProBoo.ttf);
+}
+
+.letter-reveal {
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.letter-reveal-character {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
 }
 
 html {
@@ -55,4 +65,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #b923e1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-reveal-character {
+    will-change: auto;
+  }
 }

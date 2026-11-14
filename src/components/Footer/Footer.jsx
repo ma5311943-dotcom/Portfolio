@@ -3,6 +3,8 @@
 import React from "react";
 
 import "./Footer.css";
+import LetterReveal from "../LetterReveal/LetterReveal";
+import Reveal from "../Reveal/Reveal";
 
 
 
@@ -20,7 +22,7 @@ const Footer = () => {
     return (
         <footer className="footer">
 
-            <div className="footer-container" data-aos="fade-up">
+            <Reveal className="footer-container">
 
                 <div className="footer-brand">
                     <div
@@ -37,7 +39,7 @@ const Footer = () => {
 
 
                 <div className="footer-links">
-                    <h4>Navigation</h4>
+                    <LetterReveal as="h4" text="Navigation" />
 
                     <ul>
                         <li onClick={() => scrollToSection("home")}>Home</li>
@@ -50,7 +52,7 @@ const Footer = () => {
 
 
                 <div className="footer-socials">
-                    <h4>Social</h4>
+                    <LetterReveal as="h4" text="Social" />
 
                     <ul>
                         <li>
@@ -75,7 +77,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-            </div>
+            </Reveal>
 
 
             <div className="footer-bottom">

@@ -15,6 +15,8 @@ import {
   GaugeCircle,
   BugOff,
 } from "lucide-react";
+import LetterReveal from "../LetterReveal/LetterReveal";
+import Reveal from "../Reveal/Reveal";
 // ===== Icon Mapper =====
 const serviceIcons = {
   "MERN Stack Development": { icon: Layers3, color: "#61dafb" },
@@ -35,10 +37,10 @@ const Services = () => {
 
   return (
     <div id="services" className="services">
-      <div className="services-title">
-        <h1>My Services</h1>
+      <Reveal className="services-title" from="down">
+        <LetterReveal as="h1" text="My Services" />
         <img src="/theme_pattern.svg" alt="" />
-      </div>
+      </Reveal>
 
       <div className="services-container">
         {Services_Data.map((service, i) => {
@@ -46,31 +48,32 @@ const Services = () => {
           const Icon = serviceData.icon;
 
           return (
-            <div 
-              className="service-format" 
+            <Reveal
               key={i}
-              data-aos="fade-up"
-              data-aos-delay={i * 100}
+              className="service-reveal"
+              delay={i * 0.07}
+              amount={0.15}
             >
-              {/* Top Row */}
-              <div className="service-top">
-                <span>{service.s_no}</span>
-                {Icon && <Icon size={40} className="service-icon" style={{ color: serviceData.color, background: `${serviceData.color}15` }} />}
+              <div className="service-format">
+                <div className="service-top">
+                  <span>{service.s_no}</span>
+                  {Icon && <Icon size={40} className="service-icon" style={{ color: serviceData.color, background: `${serviceData.color}15` }} />}
+                </div>
+
+                <LetterReveal as="h2" text={service.s_name} stagger={0.018} duration={0.2} />
+                <p>{service.s_desc}</p>
+
+                <a
+                  href={getSearchLink(service.s_name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="services-readmore"
+                >
+                  <p>Read More</p>
+                  <img src="/arrow_icon.svg" alt="" />
+                </a>
               </div>
-
-              <h2>{service.s_name}</h2>
-              <p>{service.s_desc}</p>
-
-              <a
-                href={getSearchLink(service.s_name)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="services-readmore"
-              >
-                <p>Read More</p>
-                <img src="/arrow_icon.svg" alt="" />
-              </a>
-            </div>
+            </Reveal>
           );
         })}
       </div>

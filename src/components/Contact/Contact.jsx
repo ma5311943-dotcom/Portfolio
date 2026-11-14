@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import './Contact.css';
+import LetterReveal from "../LetterReveal/LetterReveal";
+import Reveal from "../Reveal/Reveal";
 
 const Contact = () => {
     const [result, setResult] = useState("");
@@ -29,14 +31,14 @@ const Contact = () => {
 
     return (
         <div id='contact' className="contact">
-            <div className="contact-title" data-aos="fade-down">
-                <h1>Get in Touch</h1>
+            <Reveal className="contact-title" from="down">
+                <LetterReveal as="h1" text="Get in Touch" />
                 <img src="/theme_pattern.svg" alt="pattern" />
-            </div>
+            </Reveal>
 
             <div className="contact-section">
-                <div className="contact-left" data-aos="fade-right">
-                    <h1>Let's Talk</h1>
+                <Reveal className="contact-left" from="left">
+                    <LetterReveal as="h1" text="Let's Talk" />
                     <p>I am currently available to take on new projects, so feel free to drop a message.</p>
 
                     <div className="contact-details">
@@ -53,9 +55,9 @@ const Contact = () => {
                             <p>+92 319 580 3689</p>
                         </div>
                     </div>
-                </div>
+                </Reveal>
 
-                <form className="contact-form" onSubmit={onSubmit} data-aos="fade-left">
+                <Reveal as="form" className="contact-form" from="right" onSubmit={onSubmit}>
                     <input type="hidden" name="from_name" value="Portfolio Website" />
                     <input type="hidden" name="subject" value="New message from portfolio" />
                     <input type="hidden" name="email" value="ilyas5803689@gmail.com" />
@@ -65,7 +67,7 @@ const Contact = () => {
                     <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
                     <button type="submit">Send Message</button>
                     <span>{result}</span>
-                </form>
+                </Reveal>
             </div>
         </div>
     );

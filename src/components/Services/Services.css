@@ -45,6 +45,10 @@
   width: 100%;
 }
 
+.service-reveal {
+  height: 100%;
+}
+
 /* ===== Service Card ===== */
 .service-format {
   background-color: #0f0f0f;

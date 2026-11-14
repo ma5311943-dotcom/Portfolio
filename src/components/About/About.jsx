@@ -1,66 +1,79 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import "./About.css";
+import LetterReveal from "../LetterReveal/LetterReveal";
+import Reveal from "../Reveal/Reveal";
+
+const MotionDiv = motion.div;
 
 const About = () => {
-  // Custom hook for counting animation
-  const useCounter = (target, duration = 2000) => {
+  const useCounter = (target, duration = 1200, active = false) => {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-      let start = 0;
-      const end = parseInt(target, 10);
-      if (start === end) return;
+      if (!active) {
+        setCount(0);
+        return undefined;
+      }
 
-      let timer = setInterval(() => {
-        start += 1;
-        setCount(start);
-        if (start === end) clearInterval(timer);
-      }, 15);
+      const startTime = performance.now();
+      let frameId;
+      const updateCount = (time) => {
+        const progress = Math.min((time - startTime) / duration, 1);
+        setCount(Math.floor(progress * target));
+        if (progress < 1) frameId = requestAnimationFrame(updateCount);
+      };
 
-      return () => clearInterval(timer);
-    }, [target, duration]);
+      frameId = requestAnimationFrame(updateCount);
+      return () => cancelAnimationFrame(frameId);
+    }, [active, duration, target]);
 
     return count;
   };
 
-  // Component for individual skill to handle its own animation
   const SkillBar = ({ name, percent, color, index }) => {
-    const count = useCounter(percent);
+    const skillRef = useRef(null);
+    const isInView = useInView(skillRef, { once: false, amount: 0.5 });
+    const shouldReduceMotion = useReducedMotion();
+    const count = useCounter(percent, 1200, isInView);
 
     return (
-      <div
+      <MotionDiv
+        ref={skillRef}
         className="about-skill"
-        data-aos="fade-right"
-        data-aos-delay={index * 100}
+        initial={{ opacity: 0, x: -18 }}
+        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -18 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : index * 0.04 }}
       >
         <p>
-          {name} <span>{count}%</span>
+          <LetterReveal as="span" className="skill-name" text={name} stagger={0.018} duration={0.2} />
+          <span>{count}%</span>
         </p>
         <div className="skill-bar">
-          <div
+          <MotionDiv
             className="skill-fill"
-            style={{
-              "--skill-width": `${percent}%`,
-              background: color || "linear-gradient(277deg, #da7c25 0.35%, #b923e1)"
-            }}
-          ></div>
+            initial={{ width: 0 }}
+            animate={{ width: isInView ? `${percent}%` : 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1, ease: "easeOut" }}
+            style={{ background: color || "linear-gradient(277deg, #da7c25 0.35%, #b923e1)" }}
+          />
         </div>
-      </div>
+      </MotionDiv>
     );
   };
 
   return (
     <div id="about" className="about">
-      <div className="about-title" data-aos="fade-down">
-        <h1>About me</h1>
+      <Reveal className="about-title" from="down">
+        <LetterReveal as="h1" text="About me" />
         <img src="/theme_pattern.svg" alt="pattern" />
-      </div>
+      </Reveal>
       <div className="about-sections">
-        <div className="about-left" data-aos="fade-right">
+        <Reveal className="about-left" from="left">
           <img src="/profile.png" alt="Profile" />
-        </div>
-        <div className="about-right" data-aos="fade-left">
+        </Reveal>
+        <Reveal className="about-right" from="right">
           <div className="about-para">
             <p>
               I am a dedicated Full Stack Web & Mobile App Developer with expertise in building scalable, production-ready applications. My core stack includes Next.js, React.js, React Native, Node.js, Express.js, MongoDB, MySQL, PostgreSQL, and Firebase.
@@ -85,28 +98,28 @@ const About = () => {
             <SkillBar name="Docker" percent={80} color="linear-gradient(to right, #2496ed, #0db7ed)" index={10} />
             
           </div>
-        </div>
+        </Reveal>
       </div>
-      <div className="about-achievements" data-aos="fade-up">
+      <Reveal className="about-achievements">
         <div className="about-achievement">
           <h1>3+</h1>
-          <p>Years Learning Experience</p>
+          <LetterReveal as="p" text="Years Learning Experience" stagger={0.02} duration={0.2} />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>25+</h1>
-          <p>NEXT JS , MERN STACK , REACT NATIVE PROJECTS</p>
+          <LetterReveal as="p" text="NEXT JS, MERN STACK, REACT NATIVE PROJECTS" stagger={0.012} duration={0.18} />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>100%</h1>
-          <p>Learning Focus</p>
+          <LetterReveal as="p" text="Learning Focus" stagger={0.02} duration={0.2} />
         </div>
-      </div>
+      </Reveal>
 
     </div>
   );
