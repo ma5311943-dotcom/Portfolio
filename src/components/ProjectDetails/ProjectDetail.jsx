@@ -54,6 +54,7 @@ const ProjectDetail = ({ onBack, project }) => {
                             muted
                             loop
                             playsInline
+                            poster={project.img}
                             className="detail-video"
                         >
                             <source src={project.video} type="video/quicktime" />

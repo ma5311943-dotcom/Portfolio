@@ -201,5 +201,24 @@
       "NPM"
     ],
     "video": "/projects/SocialMediaAppVideo.mp4"
+  },
+  {
+    "id": "vetement",
+    "name": "Vêtement",
+    "title": "Animated Luxury Fashion Storefront",
+    "img": "/projects/VetementImg.jpg",
+    "desc": "A polished, responsive storefront for Vêtement, a Florence-inspired luxury fashion label. Visitors can explore an animated wardrobe, browse the made-to-order collection, and open an interactive fitting-room view for garment details, sizes, and delivery information.",
+    "how_built": "Built as a client-side Next.js App Router experience with React and TypeScript. GSAP powers the scroll animations, draggable wardrobe rail, and custom cursor interactions, while Framer Motion animates the rack and fitting-room overlay. Product imagery and fonts are served locally; the project is a frontend showcase with no backend or database.",
+    "tech": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "GSAP",
+      "Framer Motion",
+      "CSS",
+      "Responsive Design",
+      "Interactive UI"
+    ],
+    "video": "/projects/VetementVideo.mp4"
   }
 ]
