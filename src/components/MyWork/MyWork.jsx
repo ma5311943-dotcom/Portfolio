@@ -126,7 +126,19 @@ const MyWork = () => {
       });
       scrollTriggerRef.current = railTween.scrollTrigger;
 
+      const handleProjectWheel = (event) => {
+        if (event.deltaY === 0) return;
+
+        event.preventDefault();
+        const multiplier =
+          event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+        window.scrollBy({ top: event.deltaY * multiplier, behavior: "instant" });
+      };
+
+      stage.addEventListener("wheel", handleProjectWheel, { passive: false });
+
       return () => {
+        stage.removeEventListener("wheel", handleProjectWheel);
         railTween.scrollTrigger?.kill();
         scrollTriggerRef.current = null;
         gsap.set(track, { clearProps: "transform" });
