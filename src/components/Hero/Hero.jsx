@@ -1,7 +1,7 @@
 "use client";
 import "./Hero.css";
-import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LetterReveal from "../LetterReveal/LetterReveal";
@@ -19,16 +19,10 @@ const roles = [
 ];
 
 const Hero = () => {
-  const heroRef = useRef(null);
   const [roleIndex, setRoleIndex] = useState(0);
   const [roleText, setRoleText] = useState(roles[0]);
   const [isDeleting, setIsDeleting] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const glowY = useTransform(scrollYProgress, [0, 1], [0, 70]);
 
   useEffect(() => {
     let timeoutId;
@@ -63,12 +57,8 @@ const Hero = () => {
   }, [isDeleting, roleIndex, roleText, shouldReduceMotion]);
 
   return (
-    <div id="home" className="hero" ref={heroRef}>
-      <MotionDiv
-        className="hero-glow"
-        style={shouldReduceMotion ? undefined : { y: glowY }}
-        aria-hidden="true"
-      />
+    <div id="home" className="hero">
+      <div className="hero-glow" aria-hidden="true" />
       <MotionDiv
         className="hero-image-reveal"
         initial={shouldReduceMotion ? false : { opacity: 0, x: "-100vw" }}
