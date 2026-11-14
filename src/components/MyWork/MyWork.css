@@ -64,9 +64,14 @@
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scrollbar-color: #b923e1 #111;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   cursor: grab;
+}
+
+.featured-stage::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .featured-stage:active {
