@@ -202,7 +202,7 @@ const MyWork = () => {
                       <span key={technology}>{technology}</span>
                     ))}
                   </div>
-                  <Magnetic className="featured-magnetic-wrap">
+                  <Magnetic className="featured-magnetic-wrap" yStrength={0}>
                     <button
                       type="button"
                       onClick={() => handleProjectClick(work)}

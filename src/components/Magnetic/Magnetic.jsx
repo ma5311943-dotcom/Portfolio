@@ -9,6 +9,7 @@ const Magnetic = ({
   children,
   className = "",
   strength = 0.18,
+  yStrength = strength,
   onPointerMove,
   onPointerLeave,
   ...props
@@ -26,7 +27,7 @@ const Magnetic = ({
 
     const bounds = ref.current.getBoundingClientRect();
     const offsetX = (event.clientX - bounds.left - bounds.width / 2) * strength;
-    const offsetY = (event.clientY - bounds.top - bounds.height / 2) * strength;
+    const offsetY = (event.clientY - bounds.top - bounds.height / 2) * yStrength;
     x.set(Math.max(-12, Math.min(12, offsetX)));
     y.set(Math.max(-12, Math.min(12, offsetY)));
   };

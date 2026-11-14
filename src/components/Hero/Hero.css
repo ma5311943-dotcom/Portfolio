@@ -71,6 +71,29 @@
     -webkit-text-fill-color: transparent;
 }
 
+.hero-role {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    min-height: 2.8em;
+    max-width: 100%;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.05rem, 2.8vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.hero-role-text {
+    display: inline;
+    color: transparent;
+    background: linear-gradient(90deg, #da7c25, #b923e1);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
 .hero p {
     font-size: 1rem;
     max-width: 600px;
@@ -144,6 +167,10 @@
         font-size: 1.8rem;
     }
 
+    .hero-role {
+        font-size: 1.2rem;
+    }
+
     .hero p {
         font-size: 0.95rem;
     }
@@ -169,6 +196,10 @@
 @media (max-width: 480px) {
     .hero h1 {
         font-size: 1.5rem;
+    }
+
+    .hero-role {
+        font-size: 1.05rem;
     }
 
     .hero p {
