@@ -23,6 +23,7 @@ const MyWork = () => {
   const hoverTimeoutRef = useRef(null);
   const featuredProjects = projectsData.filter((project) => featuredIds.includes(project.id));
   const otherProjects = projectsData.filter((project) => !featuredIds.includes(project.id));
+  const allProjects = [...featuredProjects, ...otherProjects];
 
   const handleProjectClick = (project) => {
     router.push(`/project/${project.id}`);
@@ -54,12 +55,12 @@ const MyWork = () => {
     }, 700);
   };
 
-  const focusFeaturedProject = (event, index) => {
+  const focusProject = (event, index) => {
     const stage = stageRef.current;
     if (event.type === "focus" && stage?.classList.contains("featured-stage-pinned")) {
       const scrollTrigger = scrollTriggerRef.current;
       if (scrollTrigger) {
-        const progress = index / Math.max(featuredProjects.length - 1, 1);
+        const progress = index / Math.max(allProjects.length - 1, 1);
         scrollTrigger.scroll(
           scrollTrigger.start + progress * (scrollTrigger.end - scrollTrigger.start),
         );
@@ -70,7 +71,7 @@ const MyWork = () => {
     centerHoveredProject(event);
   };
 
-  const updateFeaturedPointer = (event) => {
+  const updateProjectPointer = (event) => {
     if (event.pointerType !== "mouse") return;
     const bounds = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty(
@@ -91,7 +92,7 @@ const MyWork = () => {
     );
   };
 
-  const resetFeaturedPointer = (event) => {
+  const resetProjectPointer = (event) => {
     event.currentTarget.style.setProperty("--pointer-x", "50%");
     event.currentTarget.style.setProperty("--pointer-y", "50%");
     event.currentTarget.style.setProperty("--image-x", "0px");
@@ -105,7 +106,7 @@ const MyWork = () => {
 
     const media = gsap.matchMedia();
     media.add("(min-width: 900px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)", () => {
-      if (featuredProjects.length < 2) return undefined;
+      if (allProjects.length < 2) return undefined;
 
       stage.classList.add("featured-stage-pinned");
       const getDistance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
@@ -137,7 +138,7 @@ const MyWork = () => {
       media.revert();
       window.clearTimeout(hoverTimeoutRef.current);
     };
-  }, [featuredProjects.length]);
+  }, [allProjects.length]);
 
   return (
     <div id="portfolio" className="mywork">
@@ -148,7 +149,7 @@ const MyWork = () => {
 
       <div className="section-container">
         <div className="project-rail-heading">
-          <LetterReveal as="h2" className="section-subtitle" text="Featured Projects" />
+          <LetterReveal as="h2" className="section-subtitle" text="All Projects" />
           <p>Scroll to explore · Hover to focus · Follow the rail</p>
         </div>
 
@@ -157,10 +158,10 @@ const MyWork = () => {
           ref={stageRef}
           role="region"
           tabIndex={0}
-          aria-label="Featured project collection"
+          aria-label="All projects"
         >
           <div className="featured-track" ref={trackRef} role="list">
-            {featuredProjects.map((work, index) => (
+            {allProjects.map((work, index) => (
               <article
                 key={work.id}
                 className="featured-card"
@@ -168,9 +169,9 @@ const MyWork = () => {
                 data-cursor="project"
                 data-cursor-label="EXPLORE"
                 onMouseEnter={centerHoveredProject}
-                onFocus={(event) => focusFeaturedProject(event, index)}
-                onPointerMove={updateFeaturedPointer}
-                onPointerLeave={resetFeaturedPointer}
+                onFocus={(event) => focusProject(event, index)}
+                onPointerMove={updateProjectPointer}
+                onPointerLeave={resetProjectPointer}
               >
                 <span className="featured-hanger" aria-hidden="true" />
                 <div className="featured-card-media">
@@ -178,7 +179,7 @@ const MyWork = () => {
                     <img src={work.img} alt={`${work.name} project preview`} />
                   </Reveal>
                   <span className="featured-count">
-                    {String(index + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")} / {String(allProjects.length).padStart(2, "0")}
                   </span>
                 </div>
                 <div className="featured-details">
@@ -204,34 +205,6 @@ const MyWork = () => {
           </div>
         </div>
 
-        <LetterReveal as="h2" className="section-subtitle more-projects-title" text="More Projects" />
-        <div className="mywork-container">
-          {otherProjects.map((work, index) => (
-            <Reveal
-              key={work.id}
-              className="mywork-item-reveal"
-              delay={(index % 3) * 0.07}
-              amount={0.15}
-            >
-              <button
-                type="button"
-                className="mywork-item"
-                data-cursor-label="OPEN"
-                onClick={() => handleProjectClick(work)}
-              >
-                <div className="mywork-card">
-                  <Reveal className="mywork-media-reveal" delay={0.4} duration={1.15} amount={0.15}>
-                    <img src={work.img} alt={`${work.name} project preview`} />
-                  </Reveal>
-                  <div className="mywork-overlay">
-                    <span>View Details &rarr;</span>
-                  </div>
-                </div>
-                <LetterReveal as="h3" className="mywork-item-title" text={work.name} stagger={0.05} duration={0.5} />
-              </button>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </div>
   );
