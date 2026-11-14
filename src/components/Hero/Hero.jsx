@@ -7,6 +7,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
 import Magnetic from "../Magnetic/Magnetic";
+import EyeTrackingPortrait from "../EyeTrackingPortrait/EyeTrackingPortrait";
 
 const MotionDiv = motion.div;
 const roles = [
@@ -74,7 +75,7 @@ const Hero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: shouldReduceMotion ? 0 : 1.45, delay: shouldReduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
-        <img src="/profile.png" alt="Muhammad Ilyas" />
+        <EyeTrackingPortrait src="/profile.png" alt="Muhammad Ilyas" variant="hero" />
       </MotionDiv>
       <Reveal as="h1" delay={0.15}>
         <LetterReveal as="span" text="I am " />

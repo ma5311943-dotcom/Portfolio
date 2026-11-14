@@ -10,18 +10,19 @@ const LetterReveal = ({
   stagger = 0.05,
   duration = 0.5,
   amount = 0.35,
+  once = false,
+  preserveWords = false,
   ...props
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const MotionElement = motion[Element] || motion.span;
-  const characters = Array.from(text);
 
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
         delayChildren: shouldReduceMotion ? 0 : delay,
-        staggerChildren: shouldReduceMotion ? 0 : stagger,
+        staggerChildren: shouldReduceMotion || preserveWords ? 0 : stagger,
       },
     },
   };
@@ -38,18 +39,45 @@ const LetterReveal = ({
       },
     },
   };
+  const wordVariants = {
+    hidden: {},
+    visible: (characterOffset) => ({
+      transition: {
+        delayChildren: shouldReduceMotion ? 0 : characterOffset * stagger,
+        staggerChildren: shouldReduceMotion ? 0 : stagger,
+      },
+    }),
+  };
+  let characterOffset = 0;
+  const content = preserveWords
+    ? text.split(/(\s+)/).map((word, wordIndex) => {
+        if (/^\s+$/.test(word)) return word;
 
-  return (
-    <MotionElement
-      className={`letter-reveal ${className}`.trim()}
-      aria-label={text}
-      initial={shouldReduceMotion ? false : "hidden"}
-      whileInView={shouldReduceMotion ? undefined : "visible"}
-      variants={containerVariants}
-      viewport={{ once: false, amount }}
-      {...props}
-    >
-      {characters.map((character, index) =>
+        const startOffset = characterOffset;
+        const charactersInWord = Array.from(word);
+        characterOffset += charactersInWord.length;
+
+        return (
+          <motion.span
+            key={`word-${wordIndex}`}
+            className="letter-reveal-word"
+            variants={wordVariants}
+            custom={startOffset}
+          >
+            {charactersInWord.map((character, characterIndex) => (
+              <motion.span
+                key={`${wordIndex}-${characterIndex}`}
+                aria-hidden="true"
+                className="letter-reveal-character"
+                variants={characterVariants}
+              >
+                {character}
+              </motion.span>
+            ))}
+          </motion.span>
+        );
+      })
+    : Array.from(text).map((character, index) =>
         character === " " ? (
           " "
         ) : (
@@ -62,7 +90,19 @@ const LetterReveal = ({
             {character}
           </motion.span>
         ),
-      )}
+      );
+
+  return (
+    <MotionElement
+      className={`letter-reveal ${className}`.trim()}
+      aria-label={text}
+      initial={shouldReduceMotion ? false : "hidden"}
+      whileInView={shouldReduceMotion ? undefined : "visible"}
+      variants={containerVariants}
+      viewport={{ once, amount }}
+      {...props}
+    >
+      {content}
     </MotionElement>
   );
 };

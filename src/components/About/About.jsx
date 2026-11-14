@@ -1,60 +1,63 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "framer-motion";
 import "./About.css";
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
+import EyeTrackingPortrait from "../EyeTrackingPortrait/EyeTrackingPortrait";
 
 const MotionDiv = motion.div;
 
 const About = () => {
-  const useCounter = (target, duration = 1200, active = false) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      if (!active) {
-        setCount(0);
-        return undefined;
-      }
-
-      const startTime = performance.now();
-      let frameId;
-      const updateCount = (time) => {
-        const progress = Math.min((time - startTime) / duration, 1);
-        setCount(Math.floor(progress * target));
-        if (progress < 1) frameId = requestAnimationFrame(updateCount);
-      };
-
-      frameId = requestAnimationFrame(updateCount);
-      return () => cancelAnimationFrame(frameId);
-    }, [active, duration, target]);
-
-    return count;
-  };
-
   const SkillBar = ({ name, percent, color, index }) => {
     const skillRef = useRef(null);
-    const isInView = useInView(skillRef, { once: false, amount: 0.5 });
+    const isInView = useInView(skillRef, { once: true, amount: 0.2 });
     const shouldReduceMotion = useReducedMotion();
-    const count = useCounter(percent, 1200, isInView);
+    const count = useMotionValue(0);
+    const displayCount = useTransform(count, (value) => `${Math.round(value)}%`);
+
+    useEffect(() => {
+      if (!isInView) return undefined;
+
+      const animation = animate(count, percent, {
+        duration: shouldReduceMotion ? 0 : 1.2,
+        ease: "easeOut",
+      });
+      return () => animation.stop();
+    }, [count, isInView, percent, shouldReduceMotion]);
 
     return (
       <MotionDiv
         ref={skillRef}
         className="about-skill"
-        initial={{ opacity: 0, x: -18 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -18 }}
-        transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : index * 0.04 }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : index * 0.025 }}
       >
         <p>
-          <LetterReveal as="span" className="skill-name" text={name} stagger={0.05} duration={0.5} />
-          <span>{count}%</span>
+          <LetterReveal
+            as="span"
+            className="skill-name"
+            text={name}
+            stagger={0.035}
+            duration={0.45}
+            once
+            preserveWords
+          />
+          <motion.span className="skill-percent">{displayCount}</motion.span>
         </p>
         <div className="skill-bar">
           <MotionDiv
             className="skill-fill"
-            initial={{ width: 0 }}
-            animate={{ width: isInView ? `${percent}%` : 0 }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: isInView ? percent / 100 : 0 }}
             transition={{ duration: shouldReduceMotion ? 0 : 1, ease: "easeOut" }}
             style={{ background: color || "linear-gradient(277deg, #da7c25 0.35%, #b923e1)" }}
           />
@@ -65,15 +68,15 @@ const About = () => {
 
   return (
     <div id="about" className="about">
-      <Reveal className="about-title" from="down">
-        <LetterReveal as="h1" text="About me" />
+      <Reveal className="about-title" from="down" once>
+        <LetterReveal as="h1" text="About me" once />
         <img src="/theme_pattern.svg" alt="pattern" />
       </Reveal>
       <div className="about-sections">
-        <Reveal className="about-left" from="left" delay={0.45} duration={1.1}>
-          <img src="/profile.png" alt="Profile" />
+        <Reveal className="about-left" from="left" delay={0.45} duration={1.1} once>
+          <EyeTrackingPortrait src="/profile.png" alt="Profile" variant="about" />
         </Reveal>
-        <Reveal className="about-right" from="right">
+        <Reveal className="about-right" from="up" duration={0.55} once>
           <div className="about-para">
             <p>
               I am a dedicated Full Stack Web & Mobile App Developer with expertise in building scalable, production-ready applications. My core stack includes Next.js, React.js, React Native, Node.js, Express.js, MongoDB, MySQL, PostgreSQL, and Firebase.
@@ -100,24 +103,24 @@ const About = () => {
           </div>
         </Reveal>
       </div>
-      <Reveal className="about-achievements">
+      <Reveal className="about-achievements" once>
         <div className="about-achievement">
-          <h1>3+</h1>
-          <LetterReveal as="p" text="Years Learning Experience" stagger={0.05} duration={0.5} />
+          <h1>4+</h1>
+          <LetterReveal as="p" text="Years of Learning Experience" stagger={0.05} duration={0.5} once />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>25+</h1>
-          <LetterReveal as="p" text="NEXT JS, MERN STACK, REACT NATIVE PROJECTS" stagger={0.05} duration={0.5} />
+          <LetterReveal as="p" text="Projects Built" stagger={0.05} duration={0.5} once />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>100%</h1>
-          <LetterReveal as="p" text="Learning Focus" stagger={0.05} duration={0.5} />
+          <LetterReveal as="p" text="Learning Focus" stagger={0.05} duration={0.5} once />
         </div>
       </Reveal>
 

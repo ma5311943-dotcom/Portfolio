@@ -16,10 +16,14 @@
   transform-style: preserve-3d;
 }
 
+.letter-reveal-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .letter-reveal-character {
   display: inline-block;
   transform-origin: 50% 100%;
-  will-change: transform, opacity, filter;
 }
 
 html {

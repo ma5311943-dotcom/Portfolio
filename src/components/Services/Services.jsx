@@ -37,8 +37,8 @@ const Services = () => {
 
   return (
     <div id="services" className="services">
-      <Reveal className="services-title" from="down">
-        <LetterReveal as="h1" text="My Services" />
+      <Reveal className="services-title" from="down" once>
+        <LetterReveal as="h1" text="My Services" once />
         <img src="/theme_pattern.svg" alt="" />
       </Reveal>
 
@@ -53,6 +53,7 @@ const Services = () => {
               className="service-reveal"
               delay={i * 0.07}
               amount={0.15}
+              once
             >
               <div className="service-format">
                 <div className="service-top">
@@ -60,7 +61,14 @@ const Services = () => {
                   {Icon && <Icon size={40} className="service-icon" style={{ color: serviceData.color, background: `${serviceData.color}15` }} />}
                 </div>
 
-                <LetterReveal as="h2" text={service.s_name} stagger={0.05} duration={0.5} />
+                <LetterReveal
+                  as="h2"
+                  text={service.s_name}
+                  stagger={0.05}
+                  duration={0.5}
+                  once
+                  preserveWords
+                />
                 <p>{service.s_desc}</p>
 
                 <a

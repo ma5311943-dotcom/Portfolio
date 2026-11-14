@@ -453,6 +453,11 @@
 }
 
 @media (max-width: 600px) {
+  .mywork {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
   .fullstack-details h3 {
     font-size: 1.1rem;
   }
@@ -466,7 +471,12 @@
   }
 
   .featured-card {
-    flex-basis: 82vw;
+    flex-basis: min(340px, calc(100vw - 2.5rem));
+  }
+
+  .featured-track {
+    padding-left: max(0px, calc((100% - 340px) / 2));
+    padding-right: max(0px, calc((100% - 340px) / 2));
   }
 
   .featured-details {

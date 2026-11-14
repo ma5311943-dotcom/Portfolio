@@ -17,6 +17,7 @@ const Reveal = ({
   delay = 0,
   duration = 0.85,
   amount = 0.2,
+  once = false,
   ...props
 }) => {
   const shouldReduceMotion = useReducedMotion();
@@ -33,7 +34,7 @@ const Reveal = ({
         delay: shouldReduceMotion ? 0 : delay,
         ease: [0.22, 1, 0.36, 1],
       }}
-      viewport={{ once: false, amount }}
+      viewport={{ once, amount }}
       {...props}
     >
       {children}

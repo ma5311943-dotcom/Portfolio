@@ -109,7 +109,14 @@ const MyWork = () => {
       if (allProjects.length < 2) return undefined;
 
       stage.classList.add("featured-stage-pinned");
-      const getDistance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
+      const getDistance = () => {
+        const lastCard = track.lastElementChild;
+        if (!lastCard) return 0;
+        return Math.max(
+          0,
+          lastCard.offsetLeft + lastCard.clientWidth / 2 - stage.clientWidth / 2,
+        );
+      };
       const railTween = gsap.to(track, {
         x: () => -getDistance(),
         ease: "none",
