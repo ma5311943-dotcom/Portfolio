@@ -1,26 +1,16 @@
 .eye-follow-portrait {
   position: relative;
-  perspective: 850px;
-  perspective-origin: center var(--portrait-pivot, 72%);
 }
 
 .eye-follow-head {
   position: relative;
   width: 100%;
   height: 100%;
-  transform: rotateX(var(--head-tilt-x, 0deg)) rotateY(var(--head-tilt-y, 0deg))
-    rotateZ(var(--head-rotation, 0deg)) scale(1.05);
-  transform-origin: center var(--portrait-pivot, 72%);
-  transform-style: preserve-3d;
-  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .eye-follow-idle {
   position: relative;
   width: 100%;
-  transform-origin: center var(--portrait-pivot, 72%);
-  transform-style: preserve-3d;
-  animation: eye-follow-idle 9s ease-in-out infinite;
 }
 
 .eye-follow-idle > img {
@@ -41,51 +31,92 @@
   width: 8.5%;
   height: 2.6%;
   overflow: hidden;
-  border-radius: 50%;
+  border: 1px solid rgba(185, 35, 225, 0.4);
+  border-radius: 48% 52% 46% 54% / 54% 60% 40% 46%;
+  background:
+    radial-gradient(ellipse at 50% 50%, #08060a 0%, #15101b 55%, #251230 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.9),
+    0 0 6px rgba(185, 35, 225, 0.35);
+  animation: eye-follow-natural-glow 3s ease-in-out infinite alternate;
 }
 
 .eye-follow-eye--left {
-  left: 36.85%;
+  left: 36.5%;
 }
 
 .eye-follow-eye--right {
-  left: 55.45%;
+  left: 55.75%;
 }
 
 .eye-follow-iris {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40%;
-  height: 82%;
+  width: 72%;
+  height: 112%;
+  overflow: hidden;
+  border: 1px solid rgba(218, 124, 37, 0.3);
   border-radius: 50%;
-  background: radial-gradient(ellipse at 40% 35%, #5c3b28 0%, #452d1e 58%, #2b1d13 100%);
-  transform: translate(
-    calc(-50% + var(--gaze-x, 0px)),
-    calc(-50% + var(--gaze-y, 0px))
+  background:
+    radial-gradient(ellipse at 34% 26%, rgba(255, 255, 255, 0.3), transparent 34%),
+    radial-gradient(circle at 50% 50%, #08060a 0%, #22150f 36%, #4a2818 65%, #6a3a22 85%, #180d08 100%);
+  box-shadow:
+    inset 0 0 2px rgba(255, 255, 255, 0.2),
+    0 0 4px rgba(218, 124, 37, 0.3);
+  transform: translate(-50%, -50%);
+}
+
+.eye-follow-iris::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    112deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 42%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(255, 255, 255, 0.1) 57%,
+    transparent 70%
   );
-  transition: transform 260ms ease-out;
+  background-size: 220% 100%;
+  background-position: 110% 0;
+  content: "";
+  animation: eye-follow-sheen 6.4s ease-in-out infinite;
 }
 
 .eye-follow-pupil {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40%;
-  height: 62%;
+  z-index: 1;
+  width: 42%;
+  height: 60%;
   border-radius: 50%;
-  background: #24170f;
+  background: radial-gradient(ellipse at 36% 30%, #11070a 0%, #010103 72%);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.95);
   transform: translate(-50%, -50%);
 }
 
 .eye-follow-glint {
   position: absolute;
-  top: 18%;
-  left: 25%;
-  width: 8%;
-  aspect-ratio: 1;
+  z-index: 2;
+  top: 13%;
+  left: 23%;
+  width: 15%;
+  height: 22%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.85);
+}
+
+.eye-follow-glint--small {
+  top: 25%;
+  left: 67%;
+  width: 7%;
+  height: 11%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
 }
 
 .eye-follow-lid {
@@ -93,14 +124,13 @@
   z-index: 1;
   inset: -1px 0 0;
   border-radius: 50%;
-  background: linear-gradient(180deg, #a17e70, #916e63);
+  background: linear-gradient(180deg, #c8a69a, #b89486);
   transform: scaleY(0);
   transform-origin: top;
   animation: eye-follow-blink 5s ease-in-out infinite;
 }
 
 .eye-follow-portrait--hero {
-  --portrait-pivot: 73%;
   width: 200px;
   height: 200px;
   overflow: hidden;
@@ -117,9 +147,9 @@
 }
 
 .eye-follow-portrait--about {
-  --portrait-pivot: 61%;
   width: 100%;
   overflow: hidden;
+  background: #fff;
   border-radius: 16px;
 }
 
@@ -132,27 +162,41 @@
 }
 
 .eye-follow-portrait--about .eye-follow-eye {
-  --eye-top: 29.9%;
-}
-
-@keyframes eye-follow-idle {
-  0%, 100% {
-    transform: rotateX(0deg) rotateY(-2deg) rotateZ(-1.7deg);
-  }
-  25% {
-    transform: rotateX(-1.3deg) rotateY(1.8deg) rotateZ(1.5deg);
-  }
-  50% {
-    transform: rotateX(1.6deg) rotateY(2.2deg) rotateZ(0.7deg);
-  }
-  75% {
-    transform: rotateX(0.5deg) rotateY(-1.8deg) rotateZ(-1.9deg);
-  }
+  --eye-top: 29.55%;
 }
 
 @keyframes eye-follow-blink {
   0%, 91%, 100% { transform: scaleY(0); }
   93%, 96% { transform: scaleY(1); }
+}
+
+@keyframes eye-follow-natural-glow {
+  from {
+    box-shadow:
+      inset 0 1px 2px rgba(255, 255, 255, 0.2),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.9),
+      0 0 3px rgba(185, 35, 225, 0.2);
+  }
+  to {
+    box-shadow:
+      inset 0 1px 2px rgba(255, 255, 255, 0.35),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.9),
+      0 0 7px rgba(185, 35, 225, 0.4);
+  }
+}
+
+@keyframes eye-follow-sheen {
+  0%, 55% {
+    background-position: 110% 0;
+    opacity: 0;
+  }
+  64% {
+    opacity: 0.9;
+  }
+  100% {
+    background-position: -110% 0;
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -170,18 +214,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .eye-follow-head {
-    transition: none;
-  }
-
-  .eye-follow-idle {
-    animation: none;
-  }
-
-  .eye-follow-iris {
-    transition: none;
-  }
-
+  .eye-follow-eye,
+  .eye-follow-iris::after,
   .eye-follow-lid {
     animation: none;
   }

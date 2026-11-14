@@ -3,14 +3,39 @@
     isolation: isolate;
     overflow: hidden;
     margin-top: 50px;
+    min-height: 100vh;
+    perspective: 1300px;
+}
+
+.hero-landing {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    width: 100%;
     padding: 6rem 2rem 2rem;
     text-align: center;
     min-height: 100vh;
     justify-content: center;
+}
+
+.hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-intro-shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
 }
 
 .hero-glow {
@@ -31,17 +56,18 @@
     justify-content: center;
 }
 
-.hero .eye-follow-portrait--hero {
-    margin-bottom: 1.5rem;
-    border: 3px solid #b923e1;
-    box-shadow: 0 0 30px rgba(185, 35, 225, 0.5);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.hero .eye-follow-portrait--about {
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid rgba(185, 35, 225, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(185, 35, 225, 0.2);
 }
 
 .hero img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 0;
     object-fit: cover;
     object-position: center 10%;
     border: 0;
@@ -49,11 +75,16 @@
     filter: brightness(0.60);
 }
 
-.hero .eye-follow-portrait--hero:hover {
-    transform: scale(1.035);
+.hero .eye-follow-portrait--about img {
+    height: auto;
+    border: 0;
+    border-radius: inherit;
+    box-shadow: none;
+    object-position: center top;
+    filter: brightness(0.95);
 }
 
-.hero h1 {
+.hero-landing h1 {
     font-size: 2rem;
     font-weight: 800;
     line-height: 1.2;
@@ -62,21 +93,21 @@
     overflow: hidden;
 }
 
-.hero h1 span.highlight-name {
+.hero-landing h1 span.highlight-name {
     background: linear-gradient(90deg, #da7c25, #b923e1);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero h1 .highlight-name .letter-reveal-character {
+.hero-landing h1 .highlight-name .letter-reveal-character {
     background: linear-gradient(90deg, #da7c25, #b923e1);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero-role {
+.hero-landing .hero-role {
     display: flex;
     align-items: baseline;
     justify-content: center;
@@ -91,7 +122,7 @@
     line-height: 1.4;
 }
 
-.hero-role-text {
+.hero-landing .hero-role-text {
     display: inline;
     color: transparent;
     background: linear-gradient(90deg, #da7c25, #b923e1);
@@ -99,7 +130,7 @@
     -webkit-background-clip: text;
 }
 
-.hero p {
+.hero-landing p {
     font-size: 1rem;
     max-width: 600px;
     color: #bbb;
@@ -126,7 +157,8 @@
 }
 
 .hero-connect,
-.hero-resume {
+.hero-resume,
+.hero-introduce {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,6 +180,13 @@
     background: transparent;
 }
 
+.hero-introduce {
+    border: 1px solid rgba(218, 124, 37, 0.75);
+    background: linear-gradient(110deg, rgba(218, 124, 37, 0.16), rgba(185, 35, 225, 0.16));
+    color: #fff;
+    font: inherit;
+}
+
 .hero-connect a,
 .hero-resume a {
     color: white;
@@ -157,26 +196,35 @@
 }
 
 .hero-connect:hover,
-.hero-resume:hover {
+.hero-resume:hover,
+.hero-introduce:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(185, 35, 225, 0.35);
 }
 
+.hero-introduce:focus-visible {
+    outline: 2px solid #da7c25;
+    outline-offset: 4px;
+}
 
 @media (max-width: 768px) {
-    .hero {
+    .hero-landing {
         padding: 4rem 1.5rem 2rem;
     }
 
-    .hero h1 {
+    .hero .eye-follow-portrait--about {
+        max-width: 260px;
+    }
+
+    .hero-landing h1 {
         font-size: 1.8rem;
     }
 
-    .hero-role {
+    .hero-landing .hero-role {
         font-size: 1.2rem;
     }
 
-    .hero p {
+    .hero-landing p {
         font-size: 0.95rem;
     }
 
@@ -186,22 +234,23 @@
     }
 
     .hero-connect,
-    .hero-resume {
+    .hero-resume,
+    .hero-introduce {
         padding: 12px 24px;
         min-width: 140px;
     }
 }
 
 @media (max-width: 480px) {
-    .hero h1 {
+    .hero-landing h1 {
         font-size: 1.5rem;
     }
 
-    .hero-role {
+    .hero-landing .hero-role {
         font-size: 1.05rem;
     }
 
-    .hero p {
+    .hero-landing p {
         font-size: 0.85rem;
     }
 
@@ -210,7 +259,8 @@
     }
 
     .hero-connect,
-    .hero-resume {
+    .hero-resume,
+    .hero-introduce {
         padding: 10px 20px;
         font-size: 0.85rem;
         min-width: 120px;
@@ -271,6 +321,58 @@
     animation: scroll-cue-pulse 1.5s ease-in-out infinite;
 }
 
+@media (min-width: 769px) {
+    .hero-landing {
+        display: grid;
+        grid-template-areas: "copy portrait";
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+        align-items: center;
+        gap: clamp(2rem, 5vw, 5rem);
+        padding: 6rem clamp(2rem, 7vw, 7rem) 2rem;
+        text-align: left;
+    }
+
+    .hero-copy {
+        grid-area: copy;
+        align-items: flex-start;
+        max-width: 760px;
+    }
+
+    .hero-image-reveal {
+        grid-area: portrait;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .hero .eye-follow-portrait--hero {
+        margin-bottom: 0;
+    }
+
+    .hero-landing h1 {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .hero-landing .hero-role {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .hero-landing p {
+        text-align: left;
+    }
+
+    .hero-action {
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+
+    .hero-socials {
+        justify-content: flex-start;
+        margin-top: 1.25rem;
+    }
+}
+
 @keyframes scroll-cue-pulse {
     0%, 100% { transform: scaleY(0.55); opacity: 0.45; }
     50% { transform: scaleY(1); opacity: 1; }
@@ -283,6 +385,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .hero-introduce {
+        transition: none;
+    }
+
     .hero-scroll-cue a span {
         animation: none;
     }

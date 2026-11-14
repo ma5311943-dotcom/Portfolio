@@ -15,6 +15,10 @@
     z-index: 2;
 }
 
+.about-title {
+    position: relative;
+}
+
 .about-title img {
     position: absolute;
     top: 50%;
@@ -71,16 +75,6 @@
     flex-direction: column;
     gap: 1.5rem;
     min-width: 0;
-}
-
-@media (min-width: 901px) {
-    .about-left {
-        order: 2;
-    }
-
-    .about-right {
-        order: 1;
-    }
 }
 
 .about-para {

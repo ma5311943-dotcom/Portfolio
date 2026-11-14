@@ -10,8 +10,6 @@ const CustomCursor = () => {
   const y = useMotionValue(-100);
   const followerX = useSpring(x, { stiffness: 280, damping: 26, mass: 0.45 });
   const followerY = useSpring(y, { stiffness: 280, damping: 26, mass: 0.45 });
-  const trailX = useSpring(followerX, { stiffness: 115, damping: 23, mass: 0.8 });
-  const trailY = useSpring(followerY, { stiffness: 115, damping: 23, mass: 0.8 });
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
   const [label, setLabel] = useState("");
@@ -19,28 +17,9 @@ const CustomCursor = () => {
   useEffect(() => {
     const pointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let pointerPosition = { x: -100, y: -100 };
 
-    const updateCursorMode = () => {
-      const enabled = pointerQuery.matches && !motionQuery.matches;
-      document.body.classList.toggle("custom-cursor-enabled", enabled);
-      setVisible(false);
-      if (!enabled) {
-        setActive(false);
-        setLabel("");
-      }
-    };
-
-    const handlePointerMove = (event) => {
-      if (!pointerQuery.matches || motionQuery.matches) return;
-      x.set(event.clientX);
-      y.set(event.clientY);
-      const target = event.target instanceof Element ? event.target : null;
-      setVisible(!target?.closest("input, textarea, [contenteditable='true']"));
-    };
-
-    const handlePointerOver = (event) => {
-      if (!pointerQuery.matches || motionQuery.matches) return;
-      const target = event.target instanceof Element ? event.target : null;
+    const updateCursorTarget = (target) => {
       if (target?.closest("input, textarea, [contenteditable='true']")) {
         setActive(false);
         setLabel("");
@@ -55,10 +34,47 @@ const CustomCursor = () => {
       );
     };
 
-    const hideCursor = () => setVisible(false);
+    const updateCursorMode = () => {
+      const enabled = pointerQuery.matches && !motionQuery.matches;
+      document.body.classList.toggle("custom-cursor-enabled", enabled);
+      setVisible(false);
+      if (!enabled) {
+        setActive(false);
+        setLabel("");
+      }
+    };
+
+    const handlePointerMove = (event) => {
+      if (!pointerQuery.matches || motionQuery.matches) return;
+      pointerPosition = { x: event.clientX, y: event.clientY };
+      x.set(event.clientX);
+      y.set(event.clientY);
+      const target = event.target instanceof Element ? event.target : null;
+      setVisible(!target?.closest("input, textarea, [contenteditable='true']"));
+      updateCursorTarget(target);
+    };
+
+    const handlePointerOver = (event) => {
+      if (!pointerQuery.matches || motionQuery.matches) return;
+      const target = event.target instanceof Element ? event.target : null;
+      updateCursorTarget(target);
+    };
+
+    const handleScroll = () => {
+      if (!pointerQuery.matches || motionQuery.matches) return;
+      const target = document.elementFromPoint(pointerPosition.x, pointerPosition.y);
+      updateCursorTarget(target);
+    };
+
+    const hideCursor = () => {
+      setVisible(false);
+      setActive(false);
+      setLabel("");
+    };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("pointerover", handlePointerOver, true);
+    document.addEventListener("scroll", handleScroll, { capture: true, passive: true });
     window.addEventListener("blur", hideCursor);
     document.documentElement.addEventListener("pointerleave", hideCursor);
     pointerQuery.addEventListener("change", updateCursorMode);
@@ -68,6 +84,7 @@ const CustomCursor = () => {
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerover", handlePointerOver, true);
+      document.removeEventListener("scroll", handleScroll, true);
       window.removeEventListener("blur", hideCursor);
       document.documentElement.removeEventListener("pointerleave", hideCursor);
       pointerQuery.removeEventListener("change", updateCursorMode);
@@ -78,12 +95,6 @@ const CustomCursor = () => {
 
   return (
     <>
-      <MotionDiv
-        className="cursor-trail"
-        aria-hidden="true"
-        style={{ x: trailX, y: trailY }}
-        animate={{ opacity: visible ? 0.55 : 0 }}
-      />
       <MotionDiv
         className={`cursor-follower${active ? " is-active" : ""}`}
         aria-hidden="true"

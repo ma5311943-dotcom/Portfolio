@@ -1,0 +1,112 @@
+.hero-3d-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.hero-3d-glow {
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle at 50% 50%, rgba(218, 124, 37, 0.35), rgba(185, 35, 225, 0.45) 50%, transparent 75%);
+  filter: blur(28px);
+  border-radius: 28px;
+  z-index: 0;
+  opacity: 0.75;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.hero-3d-wrapper:hover .hero-3d-glow {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.hero-3d-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 24px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero-3d-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #da7c25, #b923e1, #da7c25);
+  background-size: 200% 200%;
+  animation: hero-border-shimmer 4s ease infinite;
+  z-index: 1;
+  box-shadow: 0 12px 35px rgba(185, 35, 225, 0.32), 0 0 15px rgba(218, 124, 37, 0.25);
+}
+
+@keyframes hero-border-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-3d-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0d0b10;
+}
+
+.hero-3d-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  display: block;
+  filter: brightness(0.98) contrast(1.04);
+  transition: transform 0.35s ease;
+}
+
+.hero-3d-card:hover .hero-3d-img {
+  transform: scale(1.03);
+}
+
+.hero-3d-glare {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: overlay;
+  transition: opacity 0.2s ease;
+}
+
+.hero-3d-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13, 11, 16, 0.75) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .hero-3d-wrapper {
+    max-width: 230px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-3d-wrapper {
+    max-width: 200px;
+  }
+}
+

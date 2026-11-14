@@ -11,60 +11,60 @@ import {
 import "./About.css";
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
-import EyeTrackingPortrait from "../EyeTrackingPortrait/EyeTrackingPortrait";
 
 const MotionDiv = motion.div;
 
+const SkillBar = ({ name, percent, color, index }) => {
+  const skillRef = useRef(null);
+  const isInView = useInView(skillRef, { once: true, amount: 0.2 });
+  const shouldReduceMotion = useReducedMotion();
+  const count = useMotionValue(0);
+  const displayCount = useTransform(count, (value) => `${Math.round(value)}%`);
+
+  useEffect(() => {
+    if (!isInView) return undefined;
+
+    const animation = animate(count, percent, {
+      duration: shouldReduceMotion ? 0 : 1.2,
+      ease: "easeOut",
+    });
+    return () => animation.stop();
+  }, [count, isInView, percent, shouldReduceMotion]);
+
+  return (
+    <MotionDiv
+      ref={skillRef}
+      className="about-skill"
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : index * 0.025 }}
+    >
+      <p>
+        <LetterReveal
+          as="span"
+          className="skill-name"
+          text={name}
+          stagger={0.035}
+          duration={0.45}
+          once
+          preserveWords
+        />
+        <motion.span className="skill-percent">{displayCount}</motion.span>
+      </p>
+      <div className="skill-bar">
+        <MotionDiv
+          className="skill-fill"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: isInView ? percent / 100 : 0 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 1, ease: "easeOut" }}
+          style={{ background: color || "linear-gradient(277deg, #da7c25 0.35%, #b923e1)" }}
+        />
+      </div>
+    </MotionDiv>
+  );
+};
+
 const About = () => {
-  const SkillBar = ({ name, percent, color, index }) => {
-    const skillRef = useRef(null);
-    const isInView = useInView(skillRef, { once: true, amount: 0.2 });
-    const shouldReduceMotion = useReducedMotion();
-    const count = useMotionValue(0);
-    const displayCount = useTransform(count, (value) => `${Math.round(value)}%`);
-
-    useEffect(() => {
-      if (!isInView) return undefined;
-
-      const animation = animate(count, percent, {
-        duration: shouldReduceMotion ? 0 : 1.2,
-        ease: "easeOut",
-      });
-      return () => animation.stop();
-    }, [count, isInView, percent, shouldReduceMotion]);
-
-    return (
-      <MotionDiv
-        ref={skillRef}
-        className="about-skill"
-        initial={{ opacity: 0, y: 12 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{ duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : index * 0.025 }}
-      >
-        <p>
-          <LetterReveal
-            as="span"
-            className="skill-name"
-            text={name}
-            stagger={0.035}
-            duration={0.45}
-            once
-            preserveWords
-          />
-          <motion.span className="skill-percent">{displayCount}</motion.span>
-        </p>
-        <div className="skill-bar">
-          <MotionDiv
-            className="skill-fill"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: isInView ? percent / 100 : 0 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 1, ease: "easeOut" }}
-            style={{ background: color || "linear-gradient(277deg, #da7c25 0.35%, #b923e1)" }}
-          />
-        </div>
-      </MotionDiv>
-    );
-  };
 
   return (
     <div id="about" className="about">
@@ -74,7 +74,7 @@ const About = () => {
       </Reveal>
       <div className="about-sections">
         <Reveal className="about-left" from="left" delay={0.45} duration={1.1} once>
-          <EyeTrackingPortrait src="/profile.png" alt="Profile" variant="about" />
+          <img src="/profile.png" alt="Muhammad Ilyas" />
         </Reveal>
         <Reveal className="about-right" from="up" duration={0.55} once>
           <div className="about-para">
