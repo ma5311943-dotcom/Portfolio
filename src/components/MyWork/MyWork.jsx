@@ -105,7 +105,7 @@ const MyWork = () => {
     if (!stage || !track) return undefined;
 
     const media = gsap.matchMedia();
-    media.add("(min-width: 900px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)", () => {
+    media.add("(min-width: 900px) and (min-height: 520px) and (prefers-reduced-motion: no-preference)", () => {
       if (allProjects.length < 2) return undefined;
 
       stage.classList.add("featured-stage-pinned");
