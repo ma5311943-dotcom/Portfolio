@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './Contact.css';
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
+import Magnetic from "../Magnetic/Magnetic";
 
 const Contact = () => {
     const [result, setResult] = useState("");
@@ -65,7 +66,9 @@ const Contact = () => {
                     <input type="text" name="name" placeholder="Your Name" required />
                     <input type="email" name="user_email" placeholder="Your Email" required />
                     <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
-                    <button type="submit">Send Message</button>
+                    <Magnetic className="contact-submit-magnetic">
+                        <button type="submit" data-cursor-label="SEND">Send Message</button>
+                    </Magnetic>
                     <span>{result}</span>
                 </Reveal>
             </div>

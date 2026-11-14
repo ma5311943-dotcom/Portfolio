@@ -138,6 +138,15 @@
     box-shadow: 0 0 15px rgba(185, 35, 225, 0.4);
 }
 
+.contact-submit-magnetic {
+    align-self: flex-start;
+}
+
+.contact-form button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+}
+
 .contact-form span {
     color: #b923e1;
     font-size: 1rem;

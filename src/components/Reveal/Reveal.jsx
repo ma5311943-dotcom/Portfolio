@@ -15,7 +15,7 @@ const Reveal = ({
   className,
   from = "up",
   delay = 0,
-  duration = 0.65,
+  duration = 0.85,
   amount = 0.2,
   ...props
 }) => {

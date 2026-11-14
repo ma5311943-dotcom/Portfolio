@@ -47,7 +47,7 @@ const About = () => {
         transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : index * 0.04 }}
       >
         <p>
-          <LetterReveal as="span" className="skill-name" text={name} stagger={0.018} duration={0.2} />
+          <LetterReveal as="span" className="skill-name" text={name} stagger={0.05} duration={0.5} />
           <span>{count}%</span>
         </p>
         <div className="skill-bar">
@@ -70,7 +70,7 @@ const About = () => {
         <img src="/theme_pattern.svg" alt="pattern" />
       </Reveal>
       <div className="about-sections">
-        <Reveal className="about-left" from="left">
+        <Reveal className="about-left" from="left" delay={0.45} duration={1.1}>
           <img src="/profile.png" alt="Profile" />
         </Reveal>
         <Reveal className="about-right" from="right">
@@ -103,21 +103,21 @@ const About = () => {
       <Reveal className="about-achievements">
         <div className="about-achievement">
           <h1>3+</h1>
-          <LetterReveal as="p" text="Years Learning Experience" stagger={0.02} duration={0.2} />
+          <LetterReveal as="p" text="Years Learning Experience" stagger={0.05} duration={0.5} />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>25+</h1>
-          <LetterReveal as="p" text="NEXT JS, MERN STACK, REACT NATIVE PROJECTS" stagger={0.012} duration={0.18} />
+          <LetterReveal as="p" text="NEXT JS, MERN STACK, REACT NATIVE PROJECTS" stagger={0.05} duration={0.5} />
         </div>
 
         <hr />
 
         <div className="about-achievement">
           <h1>100%</h1>
-          <LetterReveal as="p" text="Learning Focus" stagger={0.02} duration={0.2} />
+          <LetterReveal as="p" text="Learning Focus" stagger={0.05} duration={0.5} />
         </div>
       </Reveal>
 

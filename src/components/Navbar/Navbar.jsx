@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import "./Navbar.css";
+import CustomCursor from "../CustomCursor/CustomCursor";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
@@ -83,9 +84,10 @@ const Navbar = () => {
   };
 
   return (
+    <>
     <div className="navbar">
       {/* Logo */}
-      <div className="nav-logo" onClick={handleLogoClick}>
+      <div className="nav-logo" onClick={handleLogoClick} data-cursor-label="HOME">
         ILYAS
       </div>
 
@@ -95,6 +97,7 @@ const Navbar = () => {
         onClick={() => setOpen((prev) => !prev)}
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
+        data-cursor-label={open ? "CLOSE" : "MENU"}
       >
         <span />
         <span />
@@ -118,6 +121,7 @@ const Navbar = () => {
               <span
                 className={menu === item.id ? "active" : ""}
                 onClick={() => handleNavClick(item)}
+                data-cursor-label="GO"
               >
                 {item.name}
               </span>
@@ -126,7 +130,7 @@ const Navbar = () => {
 
           {/* Desktop Socials dropdown (Hidden on mobile via CSS) */}
           <li className="nav-social-dropdown">
-            <span className="dropdown-trigger">Socials ▾</span>
+            <span className="dropdown-trigger" data-cursor-label="SOCIAL">Socials ▾</span>
             <div className="dropdown-content">
               <a href="https://github.com/ma5311943-dotcom" target="_blank" rel="noopener noreferrer">
                 <FaGithub size={18} /> <span>GitHub</span>
@@ -151,6 +155,7 @@ const Navbar = () => {
         {/* Connect button inside mobile panel */}
         <span
           className="mobile-connect"
+          data-cursor-label="HELLO"
           onClick={() => {
             setOpen(false);
             if (isHome) {
@@ -167,6 +172,7 @@ const Navbar = () => {
       {/* Desktop connect button */}
       <div className="nav-connect">
         <span
+          data-cursor-label="HELLO"
           onClick={() => {
             if (isHome) {
               scrollToSection("contact");
@@ -179,6 +185,8 @@ const Navbar = () => {
         </span>
       </div>
     </div>
+    <CustomCursor />
+    </>
   );
 };
 

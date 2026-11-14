@@ -6,6 +6,7 @@ import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
+import Magnetic from "../Magnetic/Magnetic";
 
 const MotionDiv = motion.div;
 
@@ -29,7 +30,7 @@ const Hero = () => {
         className="hero-image-reveal"
         initial={shouldReduceMotion ? false : { opacity: 0, x: "-100vw" }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: shouldReduceMotion ? 0 : 1.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: shouldReduceMotion ? 0 : 1.45, delay: shouldReduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         <img src="/profile.png" alt="Muhammad Ilyas" />
       </MotionDiv>
@@ -47,18 +48,22 @@ const Hero = () => {
       </Reveal>
       <div className="hero-action">
         <Reveal delay={0.35} className="hero-action-item">
-          <div className="hero-connect">
-            <AnchorLink href="#contact" offset="80" className="anchor-link">
-              Connect With Me
-            </AnchorLink>
-          </div>
+          <Magnetic>
+            <div className="hero-connect">
+              <AnchorLink href="#contact" offset="80" className="anchor-link" data-cursor-label="HELLO">
+                Connect With Me
+              </AnchorLink>
+            </div>
+          </Magnetic>
         </Reveal>
         <Reveal delay={0.45} className="hero-action-item">
-          <div className="hero-resume">
-            <a href="/cv.docx" download className="resume-link">
-              My Resume
-            </a>
-          </div>
+          <Magnetic>
+            <div className="hero-resume">
+              <a href="/cv.docx" download className="resume-link" data-cursor-label="DOWNLOAD">
+                My Resume
+              </a>
+            </div>
+          </Magnetic>
         </Reveal>
       </div>
       <Reveal delay={0.55} className="hero-socials">

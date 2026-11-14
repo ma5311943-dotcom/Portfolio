@@ -60,7 +60,7 @@ const Services = () => {
                   {Icon && <Icon size={40} className="service-icon" style={{ color: serviceData.color, background: `${serviceData.color}15` }} />}
                 </div>
 
-                <LetterReveal as="h2" text={service.s_name} stagger={0.018} duration={0.2} />
+                <LetterReveal as="h2" text={service.s_name} stagger={0.05} duration={0.5} />
                 <p>{service.s_desc}</p>
 
                 <a
@@ -68,6 +68,7 @@ const Services = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="services-readmore"
+                  data-cursor-label="MORE"
                 >
                   <p>Read More</p>
                   <img src="/arrow_icon.svg" alt="" />

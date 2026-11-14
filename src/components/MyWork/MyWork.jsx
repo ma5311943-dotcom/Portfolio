@@ -8,6 +8,7 @@ import "./MyWork.css";
 import projectsData from "../../lib/data.json";
 import LetterReveal from "../LetterReveal/LetterReveal";
 import Reveal from "../Reveal/Reveal";
+import Magnetic from "../Magnetic/Magnetic";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,6 +70,34 @@ const MyWork = () => {
     centerHoveredProject(event);
   };
 
+  const updateFeaturedPointer = (event) => {
+    if (event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty(
+      "--pointer-x",
+      `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
+    );
+    event.currentTarget.style.setProperty(
+      "--pointer-y",
+      `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
+    );
+    event.currentTarget.style.setProperty(
+      "--image-x",
+      `${((event.clientX - bounds.left) / bounds.width - 0.5) * -10}px`,
+    );
+    event.currentTarget.style.setProperty(
+      "--image-y",
+      `${((event.clientY - bounds.top) / bounds.height - 0.5) * -10}px`,
+    );
+  };
+
+  const resetFeaturedPointer = (event) => {
+    event.currentTarget.style.setProperty("--pointer-x", "50%");
+    event.currentTarget.style.setProperty("--pointer-y", "50%");
+    event.currentTarget.style.setProperty("--image-x", "0px");
+    event.currentTarget.style.setProperty("--image-y", "0px");
+  };
+
   useEffect(() => {
     const stage = stageRef.current;
     const track = trackRef.current;
@@ -85,11 +114,11 @@ const MyWork = () => {
         ease: "none",
         scrollTrigger: {
           trigger: stage,
-          start: "top top+=100",
+          start: "center center",
           end: () => `+=${getDistance()}`,
           pin: true,
           pinSpacing: true,
-          scrub: 0.9,
+          scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -136,27 +165,39 @@ const MyWork = () => {
                 key={work.id}
                 className="featured-card"
                 role="listitem"
+                data-cursor="project"
+                data-cursor-label="EXPLORE"
                 onMouseEnter={centerHoveredProject}
                 onFocus={(event) => focusFeaturedProject(event, index)}
+                onPointerMove={updateFeaturedPointer}
+                onPointerLeave={resetFeaturedPointer}
               >
                 <span className="featured-hanger" aria-hidden="true" />
                 <div className="featured-card-media">
-                  <img src={work.img} alt={`${work.name} project preview`} />
+                  <Reveal className="featured-media-reveal" delay={0.45} duration={1.15} amount={0.15}>
+                    <img src={work.img} alt={`${work.name} project preview`} />
+                  </Reveal>
                   <span className="featured-count">
                     {String(index + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
                   </span>
                 </div>
                 <div className="featured-details">
-                  <LetterReveal as="h3" text={work.name} stagger={0.025} />
+                  <LetterReveal as="h3" text={work.name} stagger={0.05} duration={0.5} />
                   <p>{work.title}</p>
                   <div className="featured-tech">
                     {work.tech.slice(0, 3).map((technology) => (
                       <span key={technology}>{technology}</span>
                     ))}
                   </div>
-                  <button type="button" onClick={() => handleProjectClick(work)}>
-                    Explore Project <span aria-hidden="true">→</span>
-                  </button>
+                  <Magnetic className="featured-magnetic-wrap">
+                    <button
+                      type="button"
+                      onClick={() => handleProjectClick(work)}
+                      data-cursor-label="OPEN"
+                    >
+                      Explore Project <span aria-hidden="true">→</span>
+                    </button>
+                  </Magnetic>
                 </div>
               </article>
             ))}
@@ -175,15 +216,18 @@ const MyWork = () => {
               <button
                 type="button"
                 className="mywork-item"
+                data-cursor-label="OPEN"
                 onClick={() => handleProjectClick(work)}
               >
                 <div className="mywork-card">
-                  <img src={work.img} alt={`${work.name} project preview`} />
+                  <Reveal className="mywork-media-reveal" delay={0.4} duration={1.15} amount={0.15}>
+                    <img src={work.img} alt={`${work.name} project preview`} />
+                  </Reveal>
                   <div className="mywork-overlay">
                     <span>View Details &rarr;</span>
                   </div>
                 </div>
-                <LetterReveal as="h3" className="mywork-item-title" text={work.name} stagger={0.018} duration={0.2} />
+                <LetterReveal as="h3" className="mywork-item-title" text={work.name} stagger={0.05} duration={0.5} />
               </button>
             </Reveal>
           ))}

@@ -27,6 +27,7 @@ const Footer = () => {
                 <div className="footer-brand">
                     <div
                         className="nav-logo"
+                        data-cursor-label="HOME"
                         onClick={() => scrollToSection("home")}
                     >
                         ILYAS
@@ -42,11 +43,11 @@ const Footer = () => {
                     <LetterReveal as="h4" text="Navigation" />
 
                     <ul>
-                        <li onClick={() => scrollToSection("home")}>Home</li>
-                        <li onClick={() => scrollToSection("about")}>About</li>
-                        <li onClick={() => scrollToSection("services")}>Services</li>
-                        <li onClick={() => scrollToSection("portfolio")}>Projects</li>
-                        <li onClick={() => scrollToSection("contact")}>Contact</li>
+                        <li onClick={() => scrollToSection("home")} data-cursor-label="GO">Home</li>
+                        <li onClick={() => scrollToSection("about")} data-cursor-label="GO">About</li>
+                        <li onClick={() => scrollToSection("services")} data-cursor-label="GO">Services</li>
+                        <li onClick={() => scrollToSection("portfolio")} data-cursor-label="GO">Projects</li>
+                        <li onClick={() => scrollToSection("contact")} data-cursor-label="GO">Contact</li>
                     </ul>
                 </div>
 

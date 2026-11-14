@@ -7,8 +7,8 @@ const LetterReveal = ({
   as: Element = "span",
   className = "",
   delay = 0,
-  stagger = 0.035,
-  duration = 0.32,
+  stagger = 0.05,
+  duration = 0.5,
   amount = 0.35,
   ...props
 }) => {
