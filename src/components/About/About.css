@@ -73,6 +73,16 @@
     min-width: 0;
 }
 
+@media (min-width: 901px) {
+    .about-left {
+        order: 2;
+    }
+
+    .about-right {
+        order: 1;
+    }
+}
+
 .about-para {
     display: flex;
     flex-direction: column;

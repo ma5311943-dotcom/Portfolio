@@ -1,7 +1,7 @@
 .eye-follow-portrait {
   position: relative;
   perspective: 850px;
-  perspective-origin: center 72%;
+  perspective-origin: center var(--portrait-pivot, 72%);
 }
 
 .eye-follow-head {
@@ -10,15 +10,15 @@
   height: 100%;
   transform: rotateX(var(--head-tilt-x, 0deg)) rotateY(var(--head-tilt-y, 0deg))
     rotateZ(var(--head-rotation, 0deg)) scale(1.05);
-  transform-origin: center 72%;
+  transform-origin: center var(--portrait-pivot, 72%);
   transform-style: preserve-3d;
-  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .eye-follow-idle {
   position: relative;
   width: 100%;
-  transform-origin: center 72%;
+  transform-origin: center var(--portrait-pivot, 72%);
   transform-style: preserve-3d;
   animation: eye-follow-idle 9s ease-in-out infinite;
 }
@@ -59,7 +59,7 @@
   width: 40%;
   height: 82%;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 40% 35%, #704b32 0%, #573a26 58%, #3c291b 100%);
+  background: radial-gradient(ellipse at 40% 35%, #5c3b28 0%, #452d1e 58%, #2b1d13 100%);
   transform: translate(
     calc(-50% + var(--gaze-x, 0px)),
     calc(-50% + var(--gaze-y, 0px))
@@ -74,7 +74,7 @@
   width: 40%;
   height: 62%;
   border-radius: 50%;
-  background: #382417;
+  background: #24170f;
   transform: translate(-50%, -50%);
 }
 
@@ -96,10 +96,11 @@
   background: linear-gradient(180deg, #a17e70, #916e63);
   transform: scaleY(0);
   transform-origin: top;
-  animation: eye-follow-blink 7.4s ease-in-out infinite;
+  animation: eye-follow-blink 5s ease-in-out infinite;
 }
 
 .eye-follow-portrait--hero {
+  --portrait-pivot: 73%;
   width: 200px;
   height: 200px;
   overflow: hidden;
@@ -116,6 +117,7 @@
 }
 
 .eye-follow-portrait--about {
+  --portrait-pivot: 61%;
   width: 100%;
   overflow: hidden;
   border-radius: 16px;
@@ -135,16 +137,16 @@
 
 @keyframes eye-follow-idle {
   0%, 100% {
-    transform: rotateX(0deg) rotateY(-1.7deg) rotateZ(-1.2deg);
+    transform: rotateX(0deg) rotateY(-2deg) rotateZ(-1.7deg);
   }
   25% {
-    transform: rotateX(-1deg) rotateY(1.6deg) rotateZ(1.1deg);
+    transform: rotateX(-1.3deg) rotateY(1.8deg) rotateZ(1.5deg);
   }
   50% {
-    transform: rotateX(1.2deg) rotateY(2deg) rotateZ(0.5deg);
+    transform: rotateX(1.6deg) rotateY(2.2deg) rotateZ(0.7deg);
   }
   75% {
-    transform: rotateX(0.4deg) rotateY(-1.5deg) rotateZ(-1.4deg);
+    transform: rotateX(0.5deg) rotateY(-1.8deg) rotateZ(-1.9deg);
   }
 }
 

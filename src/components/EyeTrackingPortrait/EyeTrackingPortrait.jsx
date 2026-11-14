@@ -45,9 +45,9 @@ const EyeTrackingPortrait = ({ src, alt, variant }) => {
         const gazeX = Math.min(4, bounds.width * 0.015);
         const gazeY = Math.min(2.4, bounds.width * 0.009);
 
-        portrait.style.setProperty("--head-tilt-x", `${directionY * -3.5}deg`);
-        portrait.style.setProperty("--head-tilt-y", `${directionX * 5}deg`);
-        portrait.style.setProperty("--head-rotation", `${directionX * 2.4}deg`);
+        portrait.style.setProperty("--head-tilt-x", `${directionY * -5}deg`);
+        portrait.style.setProperty("--head-tilt-y", `${directionX * 7}deg`);
+        portrait.style.setProperty("--head-rotation", `${directionX * 4}deg`);
         portrait.style.setProperty(
           "--gaze-x",
           `${directionX * gazeX}px`,
