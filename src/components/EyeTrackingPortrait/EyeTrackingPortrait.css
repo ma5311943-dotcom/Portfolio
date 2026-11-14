@@ -1,17 +1,16 @@
 .eye-follow-portrait {
   position: relative;
-  perspective: 900px;
-  perspective-origin: center 42%;
+  perspective: 850px;
+  perspective-origin: center 72%;
 }
 
 .eye-follow-head {
   position: relative;
   width: 100%;
   height: 100%;
-  transform: translate3d(var(--head-x, 0px), var(--head-y, 0px), 0)
-    rotateX(var(--head-tilt-x, 0deg)) rotateY(var(--head-tilt-y, 0deg))
-    rotateZ(var(--head-rotation, 0deg)) scale(1.04);
-  transform-origin: center 42%;
+  transform: rotateX(var(--head-tilt-x, 0deg)) rotateY(var(--head-tilt-y, 0deg))
+    rotateZ(var(--head-rotation, 0deg)) scale(1.05);
+  transform-origin: center 72%;
   transform-style: preserve-3d;
   transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -19,7 +18,7 @@
 .eye-follow-idle {
   position: relative;
   width: 100%;
-  transform-origin: center 42%;
+  transform-origin: center 72%;
   transform-style: preserve-3d;
   animation: eye-follow-idle 9s ease-in-out infinite;
 }
@@ -60,7 +59,7 @@
   width: 40%;
   height: 82%;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 40% 35%, #543a2b 0%, #38251c 58%, #17110e 100%);
+  background: radial-gradient(ellipse at 40% 35%, #704b32 0%, #573a26 58%, #3c291b 100%);
   transform: translate(
     calc(-50% + var(--gaze-x, 0px)),
     calc(-50% + var(--gaze-y, 0px))
@@ -75,7 +74,7 @@
   width: 40%;
   height: 62%;
   border-radius: 50%;
-  background: #100d0b;
+  background: #382417;
   transform: translate(-50%, -50%);
 }
 
@@ -111,10 +110,6 @@
   height: 100%;
 }
 
-.eye-follow-portrait--hero .eye-follow-overlay {
-  filter: brightness(0.6);
-}
-
 .eye-follow-portrait--hero .eye-follow-eye {
   --eye-top: 39.8%;
   height: 4%;
@@ -140,16 +135,16 @@
 
 @keyframes eye-follow-idle {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(-1deg) rotateZ(-0.15deg);
+    transform: rotateX(0deg) rotateY(-1.7deg) rotateZ(-1.2deg);
   }
   25% {
-    transform: translate3d(1px, -2px, 0) rotateX(-0.8deg) rotateY(0.9deg) rotateZ(0.15deg);
+    transform: rotateX(-1deg) rotateY(1.6deg) rotateZ(1.1deg);
   }
   50% {
-    transform: translate3d(0, 1.5px, 0) rotateX(0.9deg) rotateY(1.4deg) rotateZ(0deg);
+    transform: rotateX(1.2deg) rotateY(2deg) rotateZ(0.5deg);
   }
   75% {
-    transform: translate3d(-1px, -1px, 0) rotateX(0.4deg) rotateY(-0.8deg) rotateZ(-0.15deg);
+    transform: rotateX(0.4deg) rotateY(-1.5deg) rotateZ(-1.4deg);
   }
 }
 

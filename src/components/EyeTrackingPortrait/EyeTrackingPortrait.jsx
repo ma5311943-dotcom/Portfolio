@@ -42,22 +42,12 @@ const EyeTrackingPortrait = ({ src, alt, variant }) => {
           ),
         );
 
-        const headX = Math.min(5, bounds.width * 0.025);
-        const headY = Math.min(4, bounds.width * 0.018);
         const gazeX = Math.min(4, bounds.width * 0.015);
         const gazeY = Math.min(2.4, bounds.width * 0.009);
 
-        portrait.style.setProperty(
-          "--head-x",
-          `${directionX * headX}px`,
-        );
-        portrait.style.setProperty(
-          "--head-y",
-          `${directionY * headY}px`,
-        );
-        portrait.style.setProperty("--head-tilt-x", `${directionY * -2.5}deg`);
-        portrait.style.setProperty("--head-tilt-y", `${directionX * 4}deg`);
-        portrait.style.setProperty("--head-rotation", `${directionX * 0.6}deg`);
+        portrait.style.setProperty("--head-tilt-x", `${directionY * -3.5}deg`);
+        portrait.style.setProperty("--head-tilt-y", `${directionX * 5}deg`);
+        portrait.style.setProperty("--head-rotation", `${directionX * 2.4}deg`);
         portrait.style.setProperty(
           "--gaze-x",
           `${directionX * gazeX}px`,
@@ -79,8 +69,6 @@ const EyeTrackingPortrait = ({ src, alt, variant }) => {
       if (!portrait) return;
 
       [
-        "--head-x",
-        "--head-y",
         "--head-tilt-x",
         "--head-tilt-y",
         "--head-rotation",
