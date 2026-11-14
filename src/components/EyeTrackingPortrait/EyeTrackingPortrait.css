@@ -1,5 +1,7 @@
 .eye-follow-portrait {
   position: relative;
+  perspective: 900px;
+  perspective-origin: center 42%;
 }
 
 .eye-follow-head {
@@ -7,12 +9,22 @@
   width: 100%;
   height: 100%;
   transform: translate3d(var(--head-x, 0px), var(--head-y, 0px), 0)
-    rotate(var(--head-rotation, 0deg)) scale(1.02);
-  transform-origin: center;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    rotateX(var(--head-tilt-x, 0deg)) rotateY(var(--head-tilt-y, 0deg))
+    rotateZ(var(--head-rotation, 0deg)) scale(1.04);
+  transform-origin: center 42%;
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.eye-follow-head > img {
+.eye-follow-idle {
+  position: relative;
+  width: 100%;
+  transform-origin: center 42%;
+  transform-style: preserve-3d;
+  animation: eye-follow-idle 9s ease-in-out infinite;
+}
+
+.eye-follow-idle > img {
   display: block;
 }
 
@@ -45,23 +57,23 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 47%;
-  height: 88%;
+  width: 40%;
+  height: 82%;
   border-radius: 50%;
   background: radial-gradient(ellipse at 40% 35%, #543a2b 0%, #38251c 58%, #17110e 100%);
   transform: translate(
     calc(-50% + var(--gaze-x, 0px)),
     calc(-50% + var(--gaze-y, 0px))
   );
-  transition: transform 180ms ease-out;
+  transition: transform 260ms ease-out;
 }
 
 .eye-follow-pupil {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 46%;
-  height: 68%;
+  width: 40%;
+  height: 62%;
   border-radius: 50%;
   background: #100d0b;
   transform: translate(-50%, -50%);
@@ -95,6 +107,10 @@
   border-radius: 50%;
 }
 
+.eye-follow-portrait--hero .eye-follow-idle {
+  height: 100%;
+}
+
 .eye-follow-portrait--hero .eye-follow-overlay {
   filter: brightness(0.6);
 }
@@ -114,8 +130,27 @@
   height: auto;
 }
 
+.eye-follow-portrait--about .eye-follow-idle {
+  height: auto;
+}
+
 .eye-follow-portrait--about .eye-follow-eye {
   --eye-top: 29.9%;
+}
+
+@keyframes eye-follow-idle {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(-1deg) rotateZ(-0.15deg);
+  }
+  25% {
+    transform: translate3d(1px, -2px, 0) rotateX(-0.8deg) rotateY(0.9deg) rotateZ(0.15deg);
+  }
+  50% {
+    transform: translate3d(0, 1.5px, 0) rotateX(0.9deg) rotateY(1.4deg) rotateZ(0deg);
+  }
+  75% {
+    transform: translate3d(-1px, -1px, 0) rotateX(0.4deg) rotateY(-0.8deg) rotateZ(-0.15deg);
+  }
 }
 
 @keyframes eye-follow-blink {
@@ -140,6 +175,10 @@
 @media (prefers-reduced-motion: reduce) {
   .eye-follow-head {
     transition: none;
+  }
+
+  .eye-follow-idle {
+    animation: none;
   }
 
   .eye-follow-iris {

@@ -42,30 +42,59 @@ const EyeTrackingPortrait = ({ src, alt, variant }) => {
           ),
         );
 
+        const headX = Math.min(5, bounds.width * 0.025);
+        const headY = Math.min(4, bounds.width * 0.018);
+        const gazeX = Math.min(4, bounds.width * 0.015);
+        const gazeY = Math.min(2.4, bounds.width * 0.009);
+
         portrait.style.setProperty(
           "--head-x",
-          `${directionX * Math.min(1.8, bounds.width * 0.006)}px`,
+          `${directionX * headX}px`,
         );
         portrait.style.setProperty(
           "--head-y",
-          `${directionY * Math.min(1.1, bounds.width * 0.004)}px`,
+          `${directionY * headY}px`,
         );
-        portrait.style.setProperty("--head-rotation", `${directionX * 0.65}deg`);
+        portrait.style.setProperty("--head-tilt-x", `${directionY * -2.5}deg`);
+        portrait.style.setProperty("--head-tilt-y", `${directionX * 4}deg`);
+        portrait.style.setProperty("--head-rotation", `${directionX * 0.6}deg`);
         portrait.style.setProperty(
           "--gaze-x",
-          `${directionX * Math.min(2.8, bounds.width * 0.01)}px`,
+          `${directionX * gazeX}px`,
         );
         portrait.style.setProperty(
           "--gaze-y",
-          `${directionY * Math.min(1.4, bounds.width * 0.005)}px`,
+          `${directionY * gazeY}px`,
         );
       });
     };
 
-    window.addEventListener("mousemove", handlePointerMove, { passive: true });
+    const resetMotion = () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+
+      const portrait = portraitRef.current;
+      if (!portrait) return;
+
+      [
+        "--head-x",
+        "--head-y",
+        "--head-tilt-x",
+        "--head-tilt-y",
+        "--head-rotation",
+        "--gaze-x",
+        "--gaze-y",
+      ].forEach((property) => portrait.style.removeProperty(property));
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", resetMotion);
 
     return () => {
-      window.removeEventListener("mousemove", handlePointerMove);
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.documentElement.removeEventListener("pointerleave", resetMotion);
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);
       }
@@ -78,22 +107,24 @@ const EyeTrackingPortrait = ({ src, alt, variant }) => {
       className={`eye-follow-portrait eye-follow-portrait--${variant}`}
     >
       <div className="eye-follow-head">
-        <img src={src} alt={alt} />
-        <div className="eye-follow-overlay" aria-hidden="true">
-          <span className="eye-follow-eye eye-follow-eye--left">
-            <span className="eye-follow-iris">
-              <span className="eye-follow-pupil" />
-              <span className="eye-follow-glint" />
+        <div className="eye-follow-idle">
+          <img src={src} alt={alt} />
+          <div className="eye-follow-overlay" aria-hidden="true">
+            <span className="eye-follow-eye eye-follow-eye--left">
+              <span className="eye-follow-iris">
+                <span className="eye-follow-pupil" />
+                <span className="eye-follow-glint" />
+              </span>
+              <span className="eye-follow-lid" />
             </span>
-            <span className="eye-follow-lid" />
-          </span>
-          <span className="eye-follow-eye eye-follow-eye--right">
-            <span className="eye-follow-iris">
-              <span className="eye-follow-pupil" />
-              <span className="eye-follow-glint" />
+            <span className="eye-follow-eye eye-follow-eye--right">
+              <span className="eye-follow-iris">
+                <span className="eye-follow-pupil" />
+                <span className="eye-follow-glint" />
+              </span>
+              <span className="eye-follow-lid" />
             </span>
-            <span className="eye-follow-lid" />
-          </span>
+          </div>
         </div>
       </div>
     </div>
